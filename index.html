@@ -1,0 +1,2304 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>North Shore Designs — North Shore Web Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --font-display: 'Cormorant Garamond', serif;
+  --font-sans: 'Syne', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+
+  /* DARK THEME — default */
+  --bg: #080c10;
+  --bg2: #0d1219;
+  --bg3: #111720;
+  --surface: #141c26;
+  --surface2: #1a2433;
+  --border: rgba(100,160,220,0.12);
+  --border2: rgba(100,160,220,0.22);
+  --text: #e8edf2;
+  --text2: #8fa8c0;
+  --text3: #5a7a96;
+  --accent: #4eb8f0;
+  --accent2: #2a8ec8;
+  --accent3: #0d6ea8;
+  --gold: #c8a96e;
+  --gold2: #e0c080;
+  --glow: rgba(78,184,240,0.15);
+  --glow2: rgba(78,184,240,0.06);
+  --overlay: rgba(8,12,16,0.88);
+  --nav-bg: rgba(8,12,16,0.92);
+}
+
+[data-theme="light"] {
+  --bg: #f0f4f8;
+  --bg2: #e8eef5;
+  --bg3: #dce5ef;
+  --surface: #ffffff;
+  --surface2: #eef3f8;
+  --border: rgba(30,80,130,0.12);
+  --border2: rgba(30,80,130,0.22);
+  --text: #0d1a28;
+  --text2: #3a5470;
+  --text3: #7a98b4;
+  --accent: #1a78c2;
+  --accent2: #1560a0;
+  --accent3: #0d4a80;
+  --gold: #8a6020;
+  --gold2: #b07828;
+  --glow: rgba(26,120,194,0.12);
+  --glow2: rgba(26,120,194,0.05);
+  --overlay: rgba(240,244,248,0.92);
+  --nav-bg: rgba(240,244,248,0.94);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background 0.4s, color 0.4s;
+}
+
+/* NOISE TEXTURE OVERLAY */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9998;
+  opacity: 0.6;
+}
+
+/* ========== ANNOUNCEMENT BANNER ========== */
+#banner {
+  background: linear-gradient(90deg, var(--accent3), var(--accent2), var(--accent3));
+  background-size: 200% 100%;
+  animation: bannerShift 6s linear infinite;
+  color: #fff;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  padding: 9px 20px;
+  position: relative;
+  z-index: 100;
+}
+@keyframes bannerShift { 0%{background-position:0%} 100%{background-position:200%} }
+
+/* ========== NAV ========== */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background: var(--nav-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid var(--border);
+  padding: 0 clamp(20px, 5vw, 80px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  transition: background 0.4s;
+}
+
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text);
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+.nav-logo .logo-dot {
+  width: 8px; height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 12px var(--accent);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+}
+.nav-links a {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--text2);
+  text-decoration: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  transition: color 0.2s, background 0.2s;
+  cursor: pointer;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--accent); background: var(--glow2); }
+
+.nav-actions { display: flex; align-items: center; gap: 10px; }
+
+.btn-chat-nav {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 30px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px var(--glow);
+}
+.btn-chat-nav:hover { background: var(--accent2); transform: translateY(-1px); box-shadow: 0 6px 28px var(--glow); }
+
+.theme-toggle {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  color: var(--text2);
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.theme-toggle:hover { background: var(--surface2); color: var(--accent); }
+
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  flex-direction: column;
+  gap: 5px;
+}
+.hamburger span {
+  display: block;
+  width: 22px; height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 64px; left: 0; right: 0;
+  background: var(--nav-bg);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 20px;
+  z-index: 998;
+  flex-direction: column;
+  gap: 4px;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  color: var(--text2);
+  text-decoration: none;
+  padding: 12px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.mobile-menu a:hover { color: var(--accent); background: var(--glow2); }
+
+/* ========== PAGE SYSTEM ========== */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ========== HERO ========== */
+#hero {
+  min-height: calc(100vh - 104px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 60px clamp(20px, 6vw, 120px);
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 50%, rgba(78,184,240,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 80% 30%, rgba(200,169,110,0.05) 0%, transparent 60%),
+    radial-gradient(ellipse 100% 100% at 50% 100%, rgba(13,110,168,0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 80% 80% at center, black 0%, transparent 75%);
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 900px;
+}
+
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+.hero-eyebrow::before, .hero-eyebrow::after {
+  content: '';
+  display: block;
+  width: 40px; height: 1px;
+  background: var(--accent);
+  opacity: 0.5;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 10vw, 9rem);
+  font-weight: 300;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin-bottom: 12px;
+  opacity: 0;
+  animation: fadeUp 0.9s ease forwards 0.4s;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--accent);
+}
+.hero-title .title-line2 {
+  color: var(--gold);
+  font-weight: 600;
+}
+
+.hero-sub {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 2.5vw, 1.6rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--text2);
+  margin-top: 20px;
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: fadeUp 0.9s ease forwards 0.6s;
+}
+
+.hero-ctas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.9s ease forwards 0.8s;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  padding: 16px 36px;
+  border-radius: 50px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 8px 32px var(--glow);
+  text-transform: uppercase;
+}
+.btn-primary:hover { background: var(--accent2); transform: translateY(-2px); box-shadow: 0 12px 40px var(--glow); }
+
+.btn-secondary {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border2);
+  padding: 16px 36px;
+  border-radius: 50px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  cursor: pointer;
+  transition: all 0.25s;
+  text-transform: uppercase;
+}
+.btn-secondary:hover { background: var(--surface); border-color: var(--accent); color: var(--accent); }
+
+/* SVG HERO ILLUSTRATION */
+.hero-illustration {
+  position: absolute;
+  right: -5%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: clamp(200px, 35vw, 420px);
+  opacity: 0.12;
+  pointer-events: none;
+  animation: float 8s ease-in-out infinite;
+}
+.hero-illustration-left {
+  position: absolute;
+  left: -3%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: clamp(120px, 20vw, 260px);
+  opacity: 0.08;
+  pointer-events: none;
+  animation: float 10s ease-in-out infinite reverse;
+}
+
+.hero-scroll {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: fadeUp 1s ease forwards 1.2s;
+}
+.hero-scroll span {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  color: var(--text3);
+}
+.scroll-line {
+  width: 1px;
+  height: 50px;
+  background: linear-gradient(to bottom, var(--accent), transparent);
+  animation: scrollDrop 2s ease-in-out infinite;
+}
+@keyframes scrollDrop { 0%,100%{opacity:0.3;transform:scaleY(0.6)} 50%{opacity:1;transform:scaleY(1)} }
+
+/* ========== STATS BAR ========== */
+.stats-bar {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 32px clamp(20px, 6vw, 120px);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 1s;
+}
+.stat-item { text-align: center; }
+.stat-num {
+  font-family: var(--font-display);
+  font-size: 2.8rem;
+  font-weight: 600;
+  color: var(--accent);
+  line-height: 1;
+  display: block;
+}
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--text3);
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+
+/* ========== SECTION SHARED ========== */
+section {
+  padding: 100px clamp(20px, 6vw, 120px);
+}
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.3em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-label::before {
+  content: '';
+  display: block;
+  width: 24px; height: 1px;
+  background: var(--accent);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 4.5rem);
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+.section-title em { font-style: italic; color: var(--gold); }
+
+.section-body {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text2);
+  max-width: 600px;
+}
+
+/* ========== SERVICES PAGE ========== */
+.services-hero {
+  padding: 80px clamp(20px, 6vw, 120px) 60px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+}
+
+.services-tabs {
+  display: flex;
+  gap: 4px;
+  padding: 0 clamp(20px, 6vw, 120px);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.services-tabs::-webkit-scrollbar { display: none; }
+
+.tab-btn {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--text3);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 18px 20px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.tab-btn:hover { color: var(--text2); }
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+.services-content { padding: 60px clamp(20px, 6vw, 120px); }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.service-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.service-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--glow2), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.service-card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 20px 60px var(--glow); }
+.service-card:hover::before { opacity: 1; }
+
+.service-card-icon {
+  width: 48px; height: 48px;
+  background: var(--glow2);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 20px;
+}
+
+.service-card-name {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.service-card-desc {
+  font-size: 0.85rem;
+  color: var(--text2);
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.service-card-price {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.service-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 16px;
+}
+
+.pill {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+/* ========== WORK / PORTFOLIO ========== */
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 24px;
+  margin-top: 60px;
+}
+
+.work-card {
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+.work-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(0,0,0,0.3); }
+
+.work-card-visual {
+  height: 220px;
+  position: relative;
+  overflow: hidden;
+}
+
+.work-card-info {
+  padding: 24px;
+}
+
+.work-card-category {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.work-card-title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.work-card-loc {
+  font-size: 0.82rem;
+  color: var(--text3);
+}
+
+/* ========== ABOUT PAGE ========== */
+.about-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.about-portrait {
+  position: relative;
+}
+.about-portrait-frame {
+  width: 100%;
+  aspect-ratio: 3/4;
+  background: var(--surface);
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  position: relative;
+}
+.about-portrait-frame svg { width: 100%; height: 100%; }
+
+.about-portrait-badge {
+  position: absolute;
+  bottom: -16px;
+  right: -16px;
+  background: var(--accent);
+  color: #fff;
+  padding: 16px 24px;
+  border-radius: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  box-shadow: 0 8px 32px var(--glow);
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.team-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 24px;
+  text-align: center;
+  transition: all 0.3s;
+}
+.team-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+
+.team-avatar {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: var(--bg3);
+  border: 2px solid var(--border2);
+  margin: 0 auto 16px;
+  overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.8rem;
+}
+
+.team-name {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.team-role {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--accent);
+  text-transform: uppercase;
+}
+
+.team-bio {
+  font-size: 0.8rem;
+  color: var(--text3);
+  margin-top: 10px;
+  line-height: 1.6;
+}
+
+/* ========== VISIT PAGE ========== */
+.visit-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+}
+
+.hours-list { margin-top: 24px; }
+.hours-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.9rem;
+}
+.hours-row .day { color: var(--text2); font-family: var(--font-mono); font-size: 0.78rem; }
+.hours-row .time { color: var(--text); }
+.hours-row.today { color: var(--accent); }
+.hours-row.today .day, .hours-row.today .time { color: var(--accent); font-weight: 500; }
+.today-badge {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  background: var(--accent);
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-left: 8px;
+}
+
+.contact-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 20px;
+}
+
+.contact-card-label {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--text3);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.contact-card-value {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--text);
+}
+
+.contact-card-value a { color: var(--accent); text-decoration: none; }
+.contact-card-value a:hover { text-decoration: underline; }
+
+.map-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+  text-decoration: none;
+  border: 1px solid var(--border2);
+  padding: 10px 18px;
+  border-radius: 30px;
+  transition: all 0.2s;
+}
+.map-link-btn:hover { background: var(--glow2); border-color: var(--accent); }
+
+/* ========== MODAL ========== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay);
+  backdrop-filter: blur(8px);
+  z-index: 9000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.modal-overlay.open { display: flex; }
+
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  max-width: 560px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 40px;
+  position: relative;
+  animation: modalIn 0.35s cubic-bezier(0.34,1.56,0.64,1) forwards;
+  box-shadow: 0 40px 120px rgba(0,0,0,0.5);
+}
+@keyframes modalIn { from{opacity:0;transform:scale(0.9) translateY(20px)} to{opacity:1;transform:scale(1) translateY(0)} }
+
+.modal-close {
+  position: absolute;
+  top: 20px; right: 20px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.modal-close:hover { background: var(--surface2); color: var(--text); }
+
+.modal-icon { font-size: 2.5rem; margin-bottom: 16px; }
+.modal-name {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.modal-price {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+.modal-desc {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--text2);
+  margin-bottom: 24px;
+}
+.modal-funfact {
+  background: var(--bg3);
+  border-left: 3px solid var(--gold);
+  border-radius: 0 12px 12px 0;
+  padding: 16px 20px;
+}
+.modal-funfact-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.modal-funfact-text {
+  font-size: 0.85rem;
+  color: var(--text2);
+  line-height: 1.7;
+}
+
+/* ========== CHATBOT ========== */
+.chat-bubble {
+  position: fixed;
+  bottom: 28px; right: 28px;
+  width: 54px; height: 54px;
+  background: var(--accent);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  z-index: 8000;
+  box-shadow: 0 8px 32px var(--glow);
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: none;
+  font-size: 1.3rem;
+  color: #fff;
+}
+.chat-bubble:hover { transform: scale(1.08); box-shadow: 0 12px 40px var(--glow); }
+.chat-dot {
+  position: absolute;
+  top: 2px; right: 2px;
+  width: 12px; height: 12px;
+  background: var(--gold);
+  border-radius: 50%;
+  border: 2px solid var(--bg);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.2)} }
+
+.chat-window {
+  position: fixed;
+  bottom: 96px; right: 28px;
+  width: 360px;
+  max-height: 500px;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  display: none;
+  flex-direction: column;
+  z-index: 8000;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.4);
+  overflow: hidden;
+  animation: chatIn 0.3s ease forwards;
+}
+.chat-window.open { display: flex; }
+@keyframes chatIn { from{opacity:0;transform:translateY(20px) scale(0.95)} to{opacity:1;transform:none} }
+
+.chat-header {
+  background: var(--accent);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.chat-header-left { display: flex; align-items: center; gap: 10px; }
+.chat-avatar {
+  width: 36px; height: 36px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+}
+.chat-header-name { font-family: var(--font-sans); font-size: 0.9rem; font-weight: 600; color: #fff; }
+.chat-header-sub { font-family: var(--font-mono); font-size: 0.62rem; color: rgba(255,255,255,0.7); }
+.chat-header-close {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: #fff;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  scroll-behavior: smooth;
+}
+
+.chat-msg {
+  max-width: 85%;
+  padding: 10px 14px;
+  border-radius: 16px;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+.chat-msg.bot {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+.chat-msg.user {
+  background: var(--accent);
+  color: #fff;
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+}
+
+.chat-quick-btns {
+  padding: 8px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  border-top: 1px solid var(--border);
+}
+.chat-quick-btn {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  background: var(--glow2);
+  border: 1px solid var(--border2);
+  padding: 5px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.chat-quick-btn:hover { background: var(--glow); }
+
+.chat-input-row {
+  padding: 14px 16px;
+  display: flex;
+  gap: 8px;
+  border-top: 1px solid var(--border);
+}
+.chat-input {
+  flex: 1;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 14px;
+  border-radius: 30px;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.chat-input:focus { border-color: var(--accent); }
+.chat-input::placeholder { color: var(--text3); }
+.chat-send {
+  background: var(--accent);
+  border: none;
+  color: #fff;
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.chat-send:hover { background: var(--accent2); }
+
+/* ========== FOOTER ========== */
+footer {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  padding: 60px clamp(20px, 6vw, 120px) 32px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 60px;
+  margin-bottom: 48px;
+}
+
+.footer-brand p {
+  font-size: 0.87rem;
+  color: var(--text3);
+  line-height: 1.8;
+  margin-top: 12px;
+  max-width: 280px;
+}
+
+.footer-col-title {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--text3);
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 10px; }
+.footer-col ul li a {
+  font-size: 0.87rem;
+  color: var(--text2);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.footer-col ul li a:hover { color: var(--accent); }
+
+.footer-bottom {
+  border-top: 1px solid var(--border);
+  padding-top: 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer-copy {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--text3);
+  letter-spacing: 0.06em;
+}
+
+.footer-tagline {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--gold);
+}
+
+/* ========== KEYFRAMES ========== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes float {
+  0%,100% { transform: translateY(-50%) translateX(0); }
+  50% { transform: translateY(-53%) translateX(-10px); }
+}
+
+/* ========== PROCESS SECTION ========== */
+.process-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0;
+  margin-top: 60px;
+  position: relative;
+}
+.process-steps::before {
+  content: '';
+  position: absolute;
+  top: 28px; left: 5%; right: 5%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border2), transparent);
+}
+
+.process-step {
+  text-align: center;
+  padding: 0 24px;
+  position: relative;
+}
+.step-num {
+  width: 56px; height: 56px;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--accent);
+  position: relative;
+  z-index: 1;
+}
+.step-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.step-desc { font-size: 0.82rem; color: var(--text3); line-height: 1.7; }
+
+/* ========== TESTIMONIALS ========== */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+  margin-top: 50px;
+}
+.testimonial-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  transition: border-color 0.3s;
+}
+.testimonial-card:hover { border-color: var(--border2); }
+.testimonial-stars { color: var(--gold); font-size: 0.9rem; margin-bottom: 16px; }
+.testimonial-text {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+.testimonial-author { display: flex; align-items: center; gap: 12px; }
+.testimonial-avatar {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: var(--bg3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.2rem;
+}
+.testimonial-name { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+.testimonial-biz { font-family: var(--font-mono); font-size: 0.65rem; color: var(--text3); }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .btn-chat-nav { display: none; }
+  .hamburger { display: flex; }
+  .stats-bar { grid-template-columns: repeat(2, 1fr); }
+  .about-layout { grid-template-columns: 1fr; }
+  .visit-layout { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
+  .process-steps::before { display: none; }
+  .hero-illustration { opacity: 0.06; width: 200px; }
+  .hero-illustration-left { display: none; }
+}
+
+@media (max-width: 600px) {
+  .stats-bar { grid-template-columns: repeat(2, 1fr); }
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; }
+  .modal { padding: 28px 20px; }
+  .chat-window { width: calc(100vw - 32px); right: 16px; }
+}
+
+/* ========== WORK CARD COLORS ========== */
+.wc-1 { background: linear-gradient(135deg, #0d2a3a, #1a5070); }
+.wc-2 { background: linear-gradient(135deg, #1a1a0d, #3a3010); }
+.wc-3 { background: linear-gradient(135deg, #1a0d1a, #40104a); }
+.wc-4 { background: linear-gradient(135deg, #0d1a0d, #103a18); }
+.wc-5 { background: linear-gradient(135deg, #1a0d0d, #4a1010); }
+.wc-6 { background: linear-gradient(135deg, #0d0d1a, #181050); }
+</style>
+</head>
+<body>
+
+<!-- ANNOUNCEMENT BANNER -->
+<div id="banner">✦ Voted #1 Web Studio on the North Shore by Local Business Owners &nbsp;·&nbsp; Now Booking Q3 Projects &nbsp;·&nbsp; Free Brand Audit for New Clients ✦</div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" onclick="showPage('home')" style="gap:14px;">
+    <!-- Lighthouse mark -->
+    <svg width="36" height="36" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+      <circle cx="100" cy="100" r="100" fill="#0b1a2e"/>
+      <polygon points="100,72 44,36 38,58" fill="#3d9fd3" opacity="0.22"/>
+      <polygon points="100,72 162,40 168,62" fill="#3d9fd3" opacity="0.16"/>
+      <ellipse cx="100" cy="158" rx="46" ry="12" fill="#112640"/>
+      <rect x="74" y="146" width="52" height="16" rx="2" fill="#122840"/>
+      <rect x="88" y="80" width="24" height="70" rx="2" fill="#1e4570"/>
+      <rect x="88" y="92" width="24" height="9" fill="#2a5a8a"/>
+      <rect x="88" y="112" width="24" height="9" fill="#2a5a8a"/>
+      <rect x="88" y="132" width="24" height="9" fill="#2a5a8a"/>
+      <rect x="83" y="76" width="34" height="6" rx="1" fill="#3d9fd3"/>
+      <rect x="86" y="58" width="28" height="20" rx="3" fill="#3d9fd3"/>
+      <line x1="100" y1="59" x2="100" y2="77" stroke="#0b1a2e" stroke-width="1.2" opacity="0.5"/>
+      <line x1="87" y1="68" x2="113" y2="68" stroke="#0b1a2e" stroke-width="1.2" opacity="0.5"/>
+      <polygon points="83,58 117,58 110,48 90,48" fill="#5ab8e8"/>
+      <circle cx="100" cy="50" r="7" fill="#ffffff" opacity="0.95"/>
+      <circle cx="100" cy="50" r="4" fill="#3d9fd3"/>
+      <rect x="93" y="134" width="14" height="18" rx="2" fill="#0b1a2e"/>
+      <path d="M54 164 Q66 158 78 164 Q90 170 102 164 Q114 158 126 164 Q138 170 148 164" stroke="#3d9fd3" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.7"/>
+      <path d="M60 172 Q72 167 84 172 Q96 177 108 172 Q120 167 140 172" stroke="#3d9fd3" stroke-width="1.2" fill="none" stroke-linecap="round" opacity="0.4"/>
+      <circle cx="148" cy="46" r="4" fill="#c8a46e" opacity="0.85"/>
+    </svg>
+    <!-- Wordmark -->
+    <span style="display:flex;flex-direction:column;line-height:1;">
+      <span style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.15rem;font-weight:600;color:var(--text);letter-spacing:0.02em;">North Shore</span>
+      <span style="font-family:'DM Mono',monospace;font-size:0.52rem;letter-spacing:0.22em;color:#3d9fd3;text-transform:uppercase;">Designs</span>
+    </span>
+  </a>
+  <ul class="nav-links">
+    <li><a onclick="showPage('home')" class="active" id="nav-home">Home</a></li>
+    <li><a onclick="showPage('services')" id="nav-services">Services</a></li>
+    <li><a onclick="showPage('work')" id="nav-work">Work</a></li>
+    <li><a onclick="showPage('about')" id="nav-about">About</a></li>
+    <li><a onclick="showPage('visit')" id="nav-visit">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+    <button class="btn-chat-nav" onclick="openChat()">Let's Talk</button>
+    <button class="hamburger" id="hamburger" onclick="toggleMobile()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <a onclick="showPage('home');closeMobile()">Home</a>
+  <a onclick="showPage('services');closeMobile()">Services</a>
+  <a onclick="showPage('work');closeMobile()">Work</a>
+  <a onclick="showPage('about');closeMobile()">About</a>
+  <a onclick="showPage('visit');closeMobile()">Contact</a>
+  <a onclick="openChat();closeMobile()">Let's Talk →</a>
+</div>
+
+<!-- ==================== HOME PAGE ==================== -->
+<div id="page-home" class="page active">
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+
+    <!-- Left wave illustration -->
+    <svg class="hero-illustration-left" viewBox="0 0 300 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M150 50 Q200 100 150 150 Q100 200 150 250 Q200 300 150 350 Q100 400 150 450 Q200 500 150 550" stroke="#4eb8f0" stroke-width="2" fill="none" opacity="0.6"/>
+      <circle cx="150" cy="50" r="8" fill="#4eb8f0" opacity="0.5"/>
+      <circle cx="150" cy="150" r="5" fill="#c8a96e" opacity="0.4"/>
+      <circle cx="150" cy="250" r="6" fill="#4eb8f0" opacity="0.4"/>
+      <circle cx="150" cy="350" r="4" fill="#c8a96e" opacity="0.3"/>
+      <circle cx="150" cy="450" r="7" fill="#4eb8f0" opacity="0.5"/>
+      <path d="M80 200 Q150 180 220 200 Q290 220 220 240 Q150 260 80 240 Z" fill="#4eb8f0" opacity="0.05"/>
+      <!-- Shore wave -->
+      <path d="M20 400 Q75 370 130 400 Q185 430 240 400 Q295 370 300 400" stroke="#c8a96e" stroke-width="1.5" fill="none" opacity="0.4"/>
+      <path d="M20 430 Q75 400 130 430 Q185 460 240 430 Q295 400 300 430" stroke="#c8a96e" stroke-width="1" fill="none" opacity="0.25"/>
+    </svg>
+
+    <!-- Right browser/design illustration -->
+    <svg class="hero-illustration" viewBox="0 0 400 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Browser window -->
+      <rect x="20" y="20" width="360" height="260" rx="16" fill="#1a2433" stroke="#4eb8f0" stroke-width="1.5" opacity="0.9"/>
+      <rect x="20" y="20" width="360" height="42" rx="16" fill="#1a2433"/>
+      <rect x="20" y="46" width="360" height="16" fill="#1a2433"/>
+      <circle cx="50" cy="41" r="6" fill="#ff5f57" opacity="0.8"/>
+      <circle cx="72" cy="41" r="6" fill="#febc2e" opacity="0.8"/>
+      <circle cx="94" cy="41" r="6" fill="#28c840" opacity="0.8"/>
+      <rect x="120" y="33" width="200" height="16" rx="8" fill="#0d1a26"/>
+      <!-- Content lines -->
+      <rect x="40" y="84" width="280" height="6" rx="3" fill="#4eb8f0" opacity="0.5"/>
+      <rect x="40" y="100" width="200" height="4" rx="2" fill="#ffffff" opacity="0.15"/>
+      <rect x="40" y="114" width="240" height="4" rx="2" fill="#ffffff" opacity="0.1"/>
+      <rect x="40" y="128" width="180" height="4" rx="2" fill="#ffffff" opacity="0.08"/>
+      <!-- Card blocks -->
+      <rect x="40" y="150" width="85" height="100" rx="8" fill="#4eb8f0" opacity="0.15"/>
+      <rect x="40" y="150" width="85" height="100" rx="8" stroke="#4eb8f0" stroke-width="1" opacity="0.3"/>
+      <rect x="140" y="150" width="85" height="100" rx="8" fill="#c8a96e" opacity="0.1"/>
+      <rect x="140" y="150" width="85" height="100" rx="8" stroke="#c8a96e" stroke-width="1" opacity="0.25"/>
+      <rect x="240" y="150" width="85" height="100" rx="8" fill="#4eb8f0" opacity="0.08"/>
+      <rect x="240" y="150" width="85" height="100" rx="8" stroke="#4eb8f0" stroke-width="1" opacity="0.2"/>
+      <!-- Cursor -->
+      <path d="M200 290 L194 310 L198 308 L201 316 L204 315 L201 307 L206 309 Z" fill="#4eb8f0" opacity="0.9"/>
+      <!-- Mobile preview below -->
+      <rect x="140" y="310" width="120" height="180" rx="14" fill="#1a2433" stroke="#4eb8f0" stroke-width="1.5" opacity="0.7"/>
+      <rect x="148" y="326" width="104" height="140" rx="4" fill="#0d1219" opacity="0.8"/>
+      <rect x="156" y="336" width="88" height="6" rx="3" fill="#4eb8f0" opacity="0.5"/>
+      <rect x="156" y="350" width="64" height="4" rx="2" fill="#ffffff" opacity="0.12"/>
+      <rect x="156" y="362" width="76" height="4" rx="2" fill="#ffffff" opacity="0.09"/>
+      <rect x="156" y="378" width="88" height="30" rx="6" fill="#4eb8f0" opacity="0.2"/>
+      <circle cx="168" cy="484" r="8" fill="#4eb8f0" opacity="0.3"/>
+      <!-- Connecting lines -->
+      <line x1="200" y1="280" x2="200" y2="310" stroke="#4eb8f0" stroke-width="1" stroke-dasharray="4 4" opacity="0.3"/>
+      <!-- Tags floating -->
+      <rect x="10" y="200" width="24" height="8" rx="4" fill="#c8a96e" opacity="0.4"/>
+      <rect x="360" y="340" width="28" height="8" rx="4" fill="#4eb8f0" opacity="0.3"/>
+    </svg>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">North Shore's Web Design Studio</div>
+      <h1 class="hero-title">
+        <em>Websites</em> that<br>
+        <span class="title-line2">command attention.</span>
+      </h1>
+      <p class="hero-sub">Where the Atlantic coast meets world-class digital craft</p>
+      <div class="hero-ctas">
+        <button class="btn-primary" onclick="showPage('work')">See Our Work</button>
+        <button class="btn-secondary" onclick="showPage('services')">View Services</button>
+      </div>
+    </div>
+
+    <div class="hero-scroll">
+      <span>SCROLL</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <span class="stat-num" style="font-size:1.6rem;letter-spacing:0.02em;">Zero</span>
+      <span class="stat-label">Cookie-cutter templates</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num" style="font-size:1.6rem;letter-spacing:0.02em;">100%</span>
+      <span class="stat-label">Custom, every time</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num" style="font-size:1.6rem;letter-spacing:0.02em;">Local</span>
+      <span class="stat-label">Born on the North Shore</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num" style="font-size:1.6rem;letter-spacing:0.02em;">Always</span>
+      <span class="stat-label">Obsessed with craft</span>
+    </div>
+  </div>
+
+  <!-- WHAT WE DO -->
+  <section>
+    <div class="section-label">What We Do</div>
+    <h2 class="section-title">Design that<br><em>sells the shore.</em></h2>
+    <p class="section-body">We build websites for North Shore businesses that look like they were made by a team in SoHo — because your customers deserve to be impressed before they ever walk through your door.</p>
+
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-num">01</div>
+        <div class="step-title">Discover</div>
+        <div class="step-desc">We get into your business, your competitors, and your customers to uncover what makes you irreplaceable.</div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02</div>
+        <div class="step-title">Design</div>
+        <div class="step-desc">A custom visual identity built from scratch — color, type, layout, and motion that feels unmistakably you.</div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03</div>
+        <div class="step-title">Build</div>
+        <div class="step-desc">Pixel-perfect development with obsessive attention to performance, accessibility, and mobile experience.</div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">04</div>
+        <div class="step-title">Launch</div>
+        <div class="step-desc">Go live with confidence — plus ongoing support so your site keeps growing with your business.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section style="background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="section-label">Client Love</div>
+    <h2 class="section-title">The North Shore<br><em>is talking.</em></h2>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"North Shore Designs completely transformed how people find us online. Bookings went up dramatically in the first few months. I didn't know a website could actually do that."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">🍽️</div>
+          <div>
+            <div class="testimonial-name">Maria C.</div>
+            <div class="testimonial-biz">Breakwater Kitchen — North Shore</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"They understood our vibe instantly. No back-and-forth, no generic templates. It looked like us from the first draft."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">🏋️</div>
+          <div>
+            <div class="testimonial-name">Derek P.</div>
+            <div class="testimonial-biz">Ironclad Training Co. — North Shore</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"As a small local shop, I was skeptical of any design agency. North Shore Designs is the real deal — they know this community and built us something we're genuinely proud of."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">🕯️</div>
+          <div>
+            <div class="testimonial-name">Fiona A.</div>
+            <div class="testimonial-biz">Driftwood & Co. — North Shore</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <section style="text-align:center;">
+    <div class="section-label" style="justify-content:center;">Ready?</div>
+    <h2 class="section-title" style="text-align:center;">Your site should be<br><em>as good as your business.</em></h2>
+    <p style="color:var(--text2);text-align:center;max-width:460px;margin:0 auto 40px;line-height:1.8;font-size:0.95rem;">Every day with a mediocre website is a customer who bounced. Let's fix that — free brand audit for every new project inquiry.</p>
+    <button class="btn-primary" style="font-size:0.82rem;" onclick="openChat()">Start a Conversation →</button>
+  </section>
+
+  <!-- FOOTER on home -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo" style="cursor:default;gap:12px;"><svg width="28" height="28" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;"><circle cx="100" cy="100" r="100" fill="#0b1a2e"/><polygon points="100,72 44,36 38,58" fill="#3d9fd3" opacity="0.22"/><polygon points="100,72 162,40 168,62" fill="#3d9fd3" opacity="0.16"/><ellipse cx="100" cy="158" rx="46" ry="12" fill="#112640"/><rect x="74" y="146" width="52" height="16" rx="2" fill="#122840"/><rect x="88" y="80" width="24" height="70" rx="2" fill="#1e4570"/><rect x="88" y="92" width="24" height="9" fill="#2a5a8a"/><rect x="88" y="112" width="24" height="9" fill="#2a5a8a"/><rect x="88" y="132" width="24" height="9" fill="#2a5a8a"/><rect x="83" y="76" width="34" height="6" rx="1" fill="#3d9fd3"/><rect x="86" y="58" width="28" height="20" rx="3" fill="#3d9fd3"/><polygon points="83,58 117,58 110,48 90,48" fill="#5ab8e8"/><circle cx="100" cy="50" r="7" fill="#ffffff" opacity="0.95"/><circle cx="100" cy="50" r="4" fill="#3d9fd3"/><path d="M54 164 Q66 158 78 164 Q90 170 102 164 Q114 158 126 164 Q138 170 148 164" stroke="#3d9fd3" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.7"/><circle cx="148" cy="46" r="4" fill="#c8a46e" opacity="0.85"/></svg><span style="display:flex;flex-direction:column;line-height:1;"><span style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.1rem;font-weight:600;color:var(--text);">North Shore</span><span style="font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.22em;color:#3d9fd3;text-transform:uppercase;">Designs</span></span></div>
+        <p>North Shore web design for businesses that care about the details. Peabody, MA — serving the entire North Shore coast.</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Navigate</div>
+        <ul>
+          <li><a onclick="showPage('home')">Home</a></li>
+          <li><a onclick="showPage('services')">Services</a></li>
+          <li><a onclick="showPage('work')">Work</a></li>
+          <li><a onclick="showPage('about')">About</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Services</div>
+        <ul>
+          <li><a onclick="showPage('services')">Web Design</a></li>
+          <li><a onclick="showPage('services')">Brand Identity</a></li>
+          <li><a onclick="showPage('services')">SEO & Content</a></li>
+          <li><a onclick="showPage('services')">Maintenance</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Contact</div>
+        <ul>
+          <li><a href="mailto:hello@northshoredesigns.com">hello@northshoredesigns.com</a></li>
+          <li><a onclick="showPage('visit')">Visit Us</a></li>
+          <li><a onclick="openChat()">Live Chat</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 North Shore Designs LLC · Peabody, MA · All rights reserved</span>
+      <span class="footer-tagline">Built on the North Shore, for the North Shore.</span>
+    </div>
+  </footer>
+</div>
+
+<!-- ==================== SERVICES PAGE ==================== -->
+<div id="page-services" class="page">
+  <div class="services-hero">
+    <div class="section-label">What We Offer</div>
+    <h1 class="section-title">Services built<br><em>for real businesses.</em></h1>
+    <p class="section-body">Every package is custom-quoted — no cookie-cutter pricing because no two businesses are the same. Click any service to learn more.</p>
+  </div>
+
+  <div class="services-tabs">
+    <button class="tab-btn active" onclick="switchTab('design', this)">Web Design</button>
+    <button class="tab-btn" onclick="switchTab('brand', this)">Brand Identity</button>
+    <button class="tab-btn" onclick="switchTab('seo', this)">SEO & Content</button>
+    <button class="tab-btn" onclick="switchTab('care', this)">Care Plans</button>
+  </div>
+
+  <div class="services-content">
+    <!-- WEB DESIGN TAB -->
+    <div class="tab-panel active" id="tab-design">
+      <div class="services-grid">
+        <div class="service-card" onclick="openModal('starter')">
+          <div class="service-card-icon">⚡</div>
+          <div class="service-card-name">Starter Site</div>
+          <div class="service-card-desc">A sharp, conversion-focused 5-page site built in 2 weeks. Perfect for new businesses or those replacing something embarrassing.</div>
+          <div class="service-card-price">From $2,400</div>
+          <div class="service-tags">
+            <span class="pill">5 pages</span><span class="pill">Mobile-first</span><span class="pill">2-week turnaround</span>
+          </div>
+        </div>
+        <div class="service-card" onclick="openModal('signature')">
+          <div class="service-card-icon">🎯</div>
+          <div class="service-card-name">Signature Site</div>
+          <div class="service-card-desc">Our most popular package. A fully custom-designed website with unique visual identity, animations, and everything your brand deserves.</div>
+          <div class="service-card-price">From $5,500</div>
+          <div class="service-tags">
+            <span class="pill">Unlimited pages</span><span class="pill">Custom animations</span><span class="pill">SEO ready</span>
+          </div>
+        </div>
+        <div class="service-card" onclick="openModal('ecommerce')">
+          <div class="service-card-icon">🛍️</div>
+          <div class="service-card-name">eCommerce</div>
+          <div class="service-card-desc">A full online store that makes buying easy and beautiful. Built for North Shore boutiques, restaurants selling merch, and specialty retailers.</div>
+          <div class="service-card-price">From $7,800</div>
+          <div class="service-tags">
+            <span class="pill">Shopify or custom</span><span class="pill">Payment integration</span><span class="pill">Inventory mgmt</span>
+          </div>
+        </div>
+        <div class="service-card" onclick="openModal('restaurant')">
+          <div class="service-card-icon">🍽️</div>
+          <div class="service-card-name">Restaurant Package</div>
+          <div class="service-card-desc">Purpose-built for North Shore restaurants. Menu management, online ordering, reservations, and a design that makes people hungry before they arrive.</div>
+          <div class="service-card-price">From $4,200</div>
+          <div class="service-tags">
+            <span class="pill">Menu CMS</span><span class="pill">OpenTable ready</span><span class="pill">Mobile menus</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BRAND TAB -->
+    <div class="tab-panel" id="tab-brand">
+      <div class="services-grid">
+        <div class="service-card" onclick="openModal('logokit')">
+          <div class="service-card-icon">✏️</div>
+          <div class="service-card-name">Logo & Mark</div>
+          <div class="service-card-desc">A distinctive logomark and wordmark that works everywhere — from business cards to building signage. Three concepts, two revision rounds.</div>
+          <div class="service-card-price">From $900</div>
+          <div class="service-tags">
+            <span class="pill">3 concepts</span><span class="pill">Vector files</span><span class="pill">Usage guide</span>
+          </div>
+        </div>
+        <div class="service-card" onclick="openModal('fullbrand')">
+          <div class="service-card-icon">🎨</div>
+          <div class="service-card-name">Full Brand Identity</div>
+          <div class="service-card-desc">Logo, color palette, typography, photography style, social templates, and a brand guidelines PDF. Everything you need to look consistent everywhere.</div>
+          <div class="service-card-price">From $2,800</div>
+          <div class="service-tags">
+            <span class="pill">Brand guidelines</span><span class="pill">Social kit</span><span class="pill">Print ready</span>
+          </div>
+        </div>
+        <div class="service-card" onclick="openModal('rebrand')">
+          <div class="service-card-icon">🔄</div>
+          <div class="service-card-name">Rebrand</div>
+          <div class="service-card-desc">You've outgrown your old look. We'll audit what's working, retire what isn't, and build you something that reflects who you actually are now.</div>
+          <div class="service-card-price">From $3,500</div>
+          <div class="service-tags">
+            <span class="pill">Brand audit</span><span class="pill">Stakeholder process</span><span class="pill">Rollout plan</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEO TAB -->
+    <div class="tab-panel" id="tab-seo">
+      <div class="services-grid">
+        <div class="service-card" onclick="openModal('localseo')">
+          <div class="service-card-icon">📍</div>
+          <div class="service-card-name">Local SEO</div>
+          <div class="service-card-desc">Own Google for your town. We optimize your site, Google Business Profile, and local citations so customers find you first — not your competitor.</div>
+          <div class="service-card-price">From $650/mo</div>
+          <div class="service-tags">
+            <span class="pill">Google Business</span><span class="pill">Citation building</span><span class="pill">Monthly reports</span>
+          </div>
+        </div>
+        <div class="service-card" onclick="openModal('content')">
+          <div class="service-card-icon">✍️</div>
+          <div class="service-card-name">Content Writing</div>
+          <div class="service-card-desc">Sharp, SEO-smart copy written by humans who actually live on the North Shore. Website pages, blog posts, and email newsletters that don't sound like a bot.</div>
+          <div class="service-card-price">From $250/page</div>
+          <div class="service-tags">
+            <span class="pill">SEO optimized</span><span class="pill">Brand voice</span><span class="pill">North Shore expertise</span>
+          </div>
+        </div>
+        <div class="service-card" onclick="openModal('analytics')">
+          <div class="service-card-icon">📊</div>
+          <div class="service-card-name">Analytics Setup</div>
+          <div class="service-card-desc">Know exactly where your customers come from and what they do on your site. GA4, Search Console, and a monthly dashboard that actually makes sense.</div>
+          <div class="service-card-price">From $450</div>
+          <div class="service-tags">
+            <span class="pill">GA4</span><span class="pill">Search Console</span><span class="pill">Monthly reports</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARE PLANS TAB -->
+    <div class="tab-panel" id="tab-care">
+      <div class="services-grid">
+        <div class="service-card" onclick="openModal('care-basic')">
+          <div class="service-card-icon">🛡️</div>
+          <div class="service-card-name">Basic Care</div>
+          <div class="service-card-desc">Security updates, plugin maintenance, monthly backups, and uptime monitoring. Your site stays healthy while you focus on your business.</div>
+          <div class="service-card-price">$99/mo</div>
+          <div class="service-tags">
+            <span class="pill">Security updates</span><span class="pill">Monthly backups</span><span class="pill">Uptime monitoring</span>
+          </div>
+        </div>
+        <div class="service-card" onclick="openModal('care-pro')">
+          <div class="service-card-icon">⭐</div>
+          <div class="service-card-name">Pro Care</div>
+          <div class="service-card-desc">Everything in Basic plus 2 hours of content updates monthly, priority support, and a quarterly performance review. The one our long-term clients love.</div>
+          <div class="service-card-price">$249/mo</div>
+          <div class="service-tags">
+            <span class="pill">2hrs content updates</span><span class="pill">Priority support</span><span class="pill">Quarterly review</span>
+          </div>
+        </div>
+        <div class="service-card" onclick="openModal('care-elite')">
+          <div class="service-card-icon">👑</div>
+          <div class="service-card-name">Elite Care</div>
+          <div class="service-card-desc">Unlimited content updates, same-day support, monthly SEO reporting, and a dedicated point of contact. For businesses where the website is mission-critical.</div>
+          <div class="service-card-price">$599/mo</div>
+          <div class="service-tags">
+            <span class="pill">Unlimited updates</span><span class="pill">Same-day support</span><span class="pill">Monthly SEO reports</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="nav-logo" style="cursor:default;gap:12px;"><svg width="28" height="28" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;"><circle cx="100" cy="100" r="100" fill="#0b1a2e"/><polygon points="100,72 44,36 38,58" fill="#3d9fd3" opacity="0.22"/><polygon points="100,72 162,40 168,62" fill="#3d9fd3" opacity="0.16"/><ellipse cx="100" cy="158" rx="46" ry="12" fill="#112640"/><rect x="74" y="146" width="52" height="16" rx="2" fill="#122840"/><rect x="88" y="80" width="24" height="70" rx="2" fill="#1e4570"/><rect x="88" y="92" width="24" height="9" fill="#2a5a8a"/><rect x="88" y="112" width="24" height="9" fill="#2a5a8a"/><rect x="88" y="132" width="24" height="9" fill="#2a5a8a"/><rect x="83" y="76" width="34" height="6" rx="1" fill="#3d9fd3"/><rect x="86" y="58" width="28" height="20" rx="3" fill="#3d9fd3"/><polygon points="83,58 117,58 110,48 90,48" fill="#5ab8e8"/><circle cx="100" cy="50" r="7" fill="#ffffff" opacity="0.95"/><circle cx="100" cy="50" r="4" fill="#3d9fd3"/><path d="M54 164 Q66 158 78 164 Q90 170 102 164 Q114 158 126 164 Q138 170 148 164" stroke="#3d9fd3" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.7"/><circle cx="148" cy="46" r="4" fill="#c8a46e" opacity="0.85"/></svg><span style="display:flex;flex-direction:column;line-height:1;"><span style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.1rem;font-weight:600;color:var(--text);">North Shore</span><span style="font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.22em;color:#3d9fd3;text-transform:uppercase;">Designs</span></span></div>
+        <p>North Shore web design for businesses that care about the details. Peabody, MA — serving the entire North Shore coast.</p>
+      </div>
+      <div class="footer-col"><div class="footer-col-title">Navigate</div><ul><li><a onclick="showPage('home')">Home</a></li><li><a onclick="showPage('work')">Work</a></li><li><a onclick="showPage('about')">About</a></li><li><a onclick="showPage('visit')">Contact</a></li></ul></div>
+      <div class="footer-col"><div class="footer-col-title">Email</div><ul><li><a href="mailto:hello@northshoredesigns.com">hello@northshoredesigns.com</a></li></ul></div>
+      <div class="footer-col"><div class="footer-col-title">Location</div><ul><li><a>Peabody, MA 01960</a></li></ul></div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 North Shore Designs LLC · Peabody, MA</span>
+      <span class="footer-tagline">Built on the North Shore, for the North Shore.</span>
+    </div>
+  </footer>
+</div>
+
+<!-- ==================== WORK PAGE ==================== -->
+<div id="page-work" class="page">
+  <section>
+    <div class="section-label">Portfolio</div>
+    <h1 class="section-title">Work we're<br><em>proud to show.</em></h1>
+    <p class="section-body">Every project is a North Shore business we believed in. Here's what happens when design actually serves the brand.</p>
+
+    <div class="work-grid">
+      <div class="work-card" onclick="openModal('w-harbor')">
+        <div class="work-card-visual wc-1">
+          <svg width="100%" height="100%" viewBox="0 0 400 220" fill="none">
+            <rect width="400" height="220" fill="none"/>
+            <path d="M0 160 Q100 120 200 150 Q300 180 400 140 L400 220 L0 220 Z" fill="rgba(78,184,240,0.15)"/>
+            <path d="M0 180 Q100 150 200 165 Q300 180 400 155 L400 220 L0 220 Z" fill="rgba(78,184,240,0.1)"/>
+            <rect x="160" y="60" width="80" height="90" rx="4" fill="rgba(78,184,240,0.2)" stroke="rgba(78,184,240,0.5)" stroke-width="1"/>
+            <rect x="170" y="70" width="60" height="8" rx="2" fill="rgba(78,184,240,0.6)"/>
+            <rect x="170" y="86" width="40" height="4" rx="2" fill="rgba(255,255,255,0.2)"/>
+            <rect x="170" y="96" width="50" height="4" rx="2" fill="rgba(255,255,255,0.15)"/>
+            <rect x="170" y="110" width="60" height="20" rx="10" fill="rgba(78,184,240,0.5)"/>
+            <text x="200" y="124" text-anchor="middle" font-size="8" fill="white" font-family="monospace">BOOK NOW</text>
+          </svg>
+        </div>
+        <div class="work-card-info">
+          <div class="work-card-category">Restaurant & Booking</div>
+          <div class="work-card-title">Breakwater Kitchen</div>
+          <div class="work-card-loc">Coastal North Shore · 2024</div>
+        </div>
+      </div>
+
+      <div class="work-card" onclick="openModal('w-tide')">
+        <div class="work-card-visual wc-4">
+          <svg width="100%" height="100%" viewBox="0 0 400 220" fill="none">
+            <circle cx="200" cy="90" r="60" fill="rgba(40,200,64,0.08)" stroke="rgba(40,200,64,0.2)" stroke-width="1"/>
+            <circle cx="200" cy="90" r="40" fill="rgba(40,200,64,0.12)" stroke="rgba(40,200,64,0.3)" stroke-width="1"/>
+            <text x="200" y="96" text-anchor="middle" font-size="30" fill="rgba(40,200,64,0.6)">💪</text>
+            <rect x="100" y="165" width="200" height="4" rx="2" fill="rgba(40,200,64,0.3)"/>
+            <rect x="140" y="177" width="120" height="4" rx="2" fill="rgba(40,200,64,0.2)"/>
+          </svg>
+        </div>
+        <div class="work-card-info">
+          <div class="work-card-category">Fitness & Wellness</div>
+          <div class="work-card-title">Ironclad Training Co.</div>
+          <div class="work-card-loc">North Shore · 2024</div>
+        </div>
+      </div>
+
+      <div class="work-card" onclick="openModal('w-saltwick')">
+        <div class="work-card-visual wc-2">
+          <svg width="100%" height="100%" viewBox="0 0 400 220" fill="none">
+            <path d="M200 40 L200 100" stroke="rgba(200,169,110,0.6)" stroke-width="2"/>
+            <ellipse cx="200" cy="40" rx="6" ry="10" fill="rgba(200,169,110,0.8)"/>
+            <path d="M200 40 Q210 20 200 10 Q190 20 200 40" fill="rgba(255,160,0,0.7)"/>
+            <path d="M200 40 Q214 16 206 6 Q194 14 200 40" fill="rgba(255,120,0,0.5)"/>
+            <rect x="180" y="100" width="40" height="60" rx="4" fill="rgba(200,169,110,0.3)" stroke="rgba(200,169,110,0.4)" stroke-width="1"/>
+            <text x="200" y="136" text-anchor="middle" font-size="8" fill="rgba(200,169,110,0.9)" font-family="serif">SALT &amp; WICK</text>
+            <path d="M100 180 Q140 160 180 175 Q220 190 260 170 Q300 150 340 165" stroke="rgba(200,169,110,0.2)" stroke-width="1" fill="none"/>
+          </svg>
+        </div>
+        <div class="work-card-info">
+          <div class="work-card-category">Retail & eCommerce</div>
+          <div class="work-card-title">Driftwood & Co.</div>
+          <div class="work-card-loc">North Shore · 2023</div>
+        </div>
+      </div>
+
+      <div class="work-card" onclick="openModal('w-cape')">
+        <div class="work-card-visual wc-6">
+          <svg width="100%" height="100%" viewBox="0 0 400 220" fill="none">
+            <rect x="80" y="60" width="240" height="140" rx="8" fill="rgba(30,60,180,0.15)" stroke="rgba(78,184,240,0.2)" stroke-width="1"/>
+            <rect x="80" y="60" width="240" height="28" rx="8" fill="rgba(30,60,180,0.2)"/>
+            <rect x="80" y="80" width="240" height="8" fill="rgba(30,60,180,0.2)"/>
+            <circle cx="100" cy="74" r="5" fill="rgba(255,95,87,0.7)"/>
+            <circle cx="116" cy="74" r="5" fill="rgba(254,188,46,0.7)"/>
+            <circle cx="132" cy="74" r="5" fill="rgba(40,200,64,0.7)"/>
+            <rect x="96" y="100" width="100" height="6" rx="3" fill="rgba(78,184,240,0.5)"/>
+            <rect x="96" y="114" width="140" height="4" rx="2" fill="rgba(255,255,255,0.12)"/>
+            <rect x="96" y="124" width="120" height="4" rx="2" fill="rgba(255,255,255,0.09)"/>
+            <rect x="96" y="140" width="80" height="22" rx="11" fill="rgba(78,184,240,0.4)"/>
+          </svg>
+        </div>
+        <div class="work-card-info">
+          <div class="work-card-category">Law & Professional</div>
+          <div class="work-card-title">Harmon & Voss Legal</div>
+          <div class="work-card-loc">North Shore · 2024</div>
+        </div>
+      </div>
+
+      <div class="work-card" onclick="openModal('w-rockport')">
+        <div class="work-card-visual wc-5">
+          <svg width="100%" height="100%" viewBox="0 0 400 220" fill="none">
+            <path d="M50 180 Q100 140 150 160 Q200 180 250 150 Q300 120 350 145 L350 220 L50 220 Z" fill="rgba(200,60,60,0.15)"/>
+            <rect x="150" y="80" width="100" height="70" rx="6" fill="rgba(200,60,60,0.2)" stroke="rgba(200,60,60,0.4)" stroke-width="1"/>
+            <text x="200" y="122" text-anchor="middle" font-size="24" fill="rgba(200,60,60,0.8)">🏠</text>
+            <rect x="120" y="168" width="160" height="3" rx="2" fill="rgba(200,60,60,0.25)"/>
+          </svg>
+        </div>
+        <div class="work-card-info">
+          <div class="work-card-category">Real Estate</div>
+          <div class="work-card-title">Ledge & Shore Realty</div>
+          <div class="work-card-loc">North Shore · 2023</div>
+        </div>
+      </div>
+
+      <div class="work-card" onclick="openModal('w-ipswich')">
+        <div class="work-card-visual wc-3">
+          <svg width="100%" height="100%" viewBox="0 0 400 220" fill="none">
+            <circle cx="120" cy="100" r="35" fill="rgba(180,50,220,0.1)" stroke="rgba(180,50,220,0.25)" stroke-width="1"/>
+            <circle cx="200" cy="80" r="50" fill="rgba(180,50,220,0.12)" stroke="rgba(180,50,220,0.3)" stroke-width="1"/>
+            <circle cx="290" cy="110" r="30" fill="rgba(180,50,220,0.08)" stroke="rgba(180,50,220,0.2)" stroke-width="1"/>
+            <text x="200" y="88" text-anchor="middle" font-size="26" fill="rgba(180,50,220,0.7)">💆</text>
+            <rect x="140" y="155" width="120" height="4" rx="2" fill="rgba(180,50,220,0.3)"/>
+          </svg>
+        </div>
+        <div class="work-card-info">
+          <div class="work-card-category">Spa & Wellness</div>
+          <div class="work-card-title">Saltmarsh Wellness</div>
+          <div class="work-card-loc">North Shore · 2024</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="nav-logo" style="cursor:default;gap:12px;"><svg width="28" height="28" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;"><circle cx="100" cy="100" r="100" fill="#0b1a2e"/><polygon points="100,72 44,36 38,58" fill="#3d9fd3" opacity="0.22"/><polygon points="100,72 162,40 168,62" fill="#3d9fd3" opacity="0.16"/><ellipse cx="100" cy="158" rx="46" ry="12" fill="#112640"/><rect x="74" y="146" width="52" height="16" rx="2" fill="#122840"/><rect x="88" y="80" width="24" height="70" rx="2" fill="#1e4570"/><rect x="88" y="92" width="24" height="9" fill="#2a5a8a"/><rect x="88" y="112" width="24" height="9" fill="#2a5a8a"/><rect x="88" y="132" width="24" height="9" fill="#2a5a8a"/><rect x="83" y="76" width="34" height="6" rx="1" fill="#3d9fd3"/><rect x="86" y="58" width="28" height="20" rx="3" fill="#3d9fd3"/><polygon points="83,58 117,58 110,48 90,48" fill="#5ab8e8"/><circle cx="100" cy="50" r="7" fill="#ffffff" opacity="0.95"/><circle cx="100" cy="50" r="4" fill="#3d9fd3"/><path d="M54 164 Q66 158 78 164 Q90 170 102 164 Q114 158 126 164 Q138 170 148 164" stroke="#3d9fd3" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.7"/><circle cx="148" cy="46" r="4" fill="#c8a46e" opacity="0.85"/></svg><span style="display:flex;flex-direction:column;line-height:1;"><span style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.1rem;font-weight:600;color:var(--text);">North Shore</span><span style="font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.22em;color:#3d9fd3;text-transform:uppercase;">Designs</span></span></div><p>North Shore web design for businesses that care about the details.</p></div>
+      <div class="footer-col"><div class="footer-col-title">Navigate</div><ul><li><a onclick="showPage('home')">Home</a></li><li><a onclick="showPage('services')">Services</a></li><li><a onclick="showPage('about')">About</a></li><li><a onclick="showPage('visit')">Contact</a></li></ul></div>
+      <div class="footer-col"><div class="footer-col-title">Email</div><ul><li><a href="mailto:hello@northshoredesigns.com">hello@northshoredesigns.com</a></li></ul></div>
+      <div class="footer-col"><div class="footer-col-title">Address</div><ul><li><a>Peabody, MA 01960</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span class="footer-copy">© 2025 North Shore Designs LLC</span><span class="footer-tagline">Built on the North Shore, for the North Shore.</span></div>
+  </footer>
+</div>
+
+<!-- ==================== ABOUT PAGE ==================== -->
+<div id="page-about" class="page">
+  <section>
+    <div class="about-layout">
+      <div class="about-portrait">
+        <div class="about-portrait-frame">
+          <svg viewBox="0 0 400 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="400" height="520" fill="var(--bg3)"/>
+            <!-- Abstract portrait / studio scene -->
+            <circle cx="200" cy="160" r="80" fill="var(--surface2)"/>
+            <circle cx="200" cy="140" r="52" fill="var(--surface)"/>
+            <ellipse cx="200" cy="195" rx="52" ry="20" fill="var(--surface)"/>
+            <!-- Face details abstract -->
+            <circle cx="185" cy="135" r="5" fill="var(--accent)" opacity="0.5"/>
+            <circle cx="215" cy="135" r="5" fill="var(--accent)" opacity="0.5"/>
+            <path d="M188 152 Q200 160 212 152" stroke="var(--gold)" stroke-width="2" fill="none" stroke-linecap="round"/>
+            <!-- Body -->
+            <rect x="150" y="215" width="100" height="120" rx="12" fill="var(--surface2)"/>
+            <!-- Laptop on desk -->
+            <rect x="80" y="360" width="240" height="6" rx="3" fill="var(--border2)"/>
+            <rect x="100" y="300" width="200" height="60" rx="8" fill="var(--surface)"/>
+            <rect x="110" y="308" width="180" height="44" rx="4" fill="var(--bg)"/>
+            <rect x="116" y="314" width="100" height="6" rx="2" fill="var(--accent)" opacity="0.5"/>
+            <rect x="116" y="326" width="140" height="4" rx="2" fill="var(--border2)"/>
+            <rect x="116" y="336" width="120" height="4" rx="2" fill="var(--border2)"/>
+            <!-- Ocean waves at bottom -->
+            <path d="M0 440 Q100 410 200 430 Q300 450 400 420 L400 520 L0 520 Z" fill="var(--accent)" opacity="0.08"/>
+            <path d="M0 460 Q100 440 200 455 Q300 470 400 445 L400 520 L0 520 Z" fill="var(--accent)" opacity="0.06"/>
+            <!-- Stars/dots -->
+            <circle cx="340" cy="50" r="3" fill="var(--accent)" opacity="0.4"/>
+            <circle cx="60" cy="80" r="2" fill="var(--gold)" opacity="0.3"/>
+            <circle cx="360" cy="200" r="2" fill="var(--gold)" opacity="0.25"/>
+            <circle cx="40" cy="300" r="3" fill="var(--accent)" opacity="0.3"/>
+          </svg>
+        </div>
+        <div class="about-portrait-badge">
+          Est. on the North Shore
+        </div>
+      </div>
+
+      <div class="about-text">
+        <div class="section-label">Our Story</div>
+        <h1 class="section-title">Built from<br><em>real life.</em></h1>
+        <p style="color:var(--text2);line-height:1.9;font-size:0.95rem;margin-bottom:20px;">North Shore Designs didn't start in a boardroom. It started at a hospital bedside. Our founder moved to Boston to be close to his brother — who was fighting a chronic illness — and spent months watching the same thing play out: understaffed nurses, systems that couldn't keep up, care that fell through the cracks. He couldn't sit still. He built a web app to help. Then a mobile app. That's just who he is — in every corporate job he ever had, he was the one who figured it out. Installing the tracking snippet nobody else would touch, learning to code when the situation called for it, wiring things together until they worked. Always finding a way.</p>
+        <p style="color:var(--text2);line-height:1.9;font-size:0.95rem;margin-bottom:20px;">When he turned that same energy toward building his own website, something clicked. Every business needs this. Every small business owner is out there doing everything — and most of them have a website that doesn't do them justice. That realization didn't let go.</p>
+        <p style="color:var(--text2);line-height:1.9;font-size:0.95rem;margin-bottom:20px;">He lived in Boston. Then Brookline. And then he found the North Shore — and became one with it. The towns, the water, the people who grind every day and actually give a damn about their community. This is home now. And while he builds for businesses everywhere, the North Shore is where his heart is, and where he wants to be most deeply rooted.</p>
+        <p style="color:var(--text2);line-height:1.9;font-size:0.95rem;"><strong style="color:var(--text);font-weight:600;">He is a small business owner, just like you.</strong> He has always found a way — and he will always find a way for you. Pricing will never be a barrier, because this was never about the money.</p>
+      </div>
+    </div>
+
+    <!-- Founder quote pull -->
+    <div style="margin-top:80px;border-left:3px solid var(--gold);padding:32px 40px;background:var(--surface);border-radius:0 16px 16px 0;max-width:700px;">
+      <p style="font-family:var(--font-display);font-size:1.5rem;font-style:italic;color:var(--text);line-height:1.7;margin-bottom:16px;">"In every job I ever had, I was the one who figured it out — the snippet, the integration, the thing nobody else wanted to touch. I watched my brother not get the care he deserved because systems failed him. I'm not going to let a broken website be the reason your business doesn't get the attention it deserves. I have always found a way. I will always find a way for you."</p>
+      <span style="font-family:var(--font-mono);font-size:0.68rem;letter-spacing:0.15em;color:var(--gold);">— Founder, North Shore Designs</span>
+    </div>
+  </section>
+
+  <!-- FOUNDER -->
+  <section style="background:var(--bg2);border-top:1px solid var(--border);">
+    <div class="section-label">The Person Behind It</div>
+    <h2 class="section-title">Not an agency.<br><em>A neighbor.</em></h2>
+    <div class="team-grid" style="max-width:320px;">
+      <div class="team-card">
+        <div class="team-avatar">🏗️</div>
+        <div class="team-name">The Founder</div>
+        <div class="team-role">Builder · Designer · Developer</div>
+        <div class="team-bio">Moved to the North Shore and never looked back. Websites, mobile apps, and a genuine belief that small businesses deserve big-quality support — without the big-agency price tag.</div>
+      </div>
+    </div>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="nav-logo" style="cursor:default;gap:12px;"><svg width="28" height="28" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;"><circle cx="100" cy="100" r="100" fill="#0b1a2e"/><polygon points="100,72 44,36 38,58" fill="#3d9fd3" opacity="0.22"/><polygon points="100,72 162,40 168,62" fill="#3d9fd3" opacity="0.16"/><ellipse cx="100" cy="158" rx="46" ry="12" fill="#112640"/><rect x="74" y="146" width="52" height="16" rx="2" fill="#122840"/><rect x="88" y="80" width="24" height="70" rx="2" fill="#1e4570"/><rect x="88" y="92" width="24" height="9" fill="#2a5a8a"/><rect x="88" y="112" width="24" height="9" fill="#2a5a8a"/><rect x="88" y="132" width="24" height="9" fill="#2a5a8a"/><rect x="83" y="76" width="34" height="6" rx="1" fill="#3d9fd3"/><rect x="86" y="58" width="28" height="20" rx="3" fill="#3d9fd3"/><polygon points="83,58 117,58 110,48 90,48" fill="#5ab8e8"/><circle cx="100" cy="50" r="7" fill="#ffffff" opacity="0.95"/><circle cx="100" cy="50" r="4" fill="#3d9fd3"/><path d="M54 164 Q66 158 78 164 Q90 170 102 164 Q114 158 126 164 Q138 170 148 164" stroke="#3d9fd3" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.7"/><circle cx="148" cy="46" r="4" fill="#c8a46e" opacity="0.85"/></svg><span style="display:flex;flex-direction:column;line-height:1;"><span style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.1rem;font-weight:600;color:var(--text);">North Shore</span><span style="font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.22em;color:#3d9fd3;text-transform:uppercase;">Designs</span></span></div><p>North Shore web design for businesses that care about the details.</p></div>
+      <div class="footer-col"><div class="footer-col-title">Navigate</div><ul><li><a onclick="showPage('home')">Home</a></li><li><a onclick="showPage('services')">Services</a></li><li><a onclick="showPage('work')">Work</a></li><li><a onclick="showPage('visit')">Contact</a></li></ul></div>
+      <div class="footer-col"><div class="footer-col-title">Email</div><ul><li><a href="mailto:hello@northshoredesigns.com">hello@northshoredesigns.com</a></li></ul></div>
+      <div class="footer-col"><div class="footer-col-title">Address</div><ul><li><a>Peabody, MA 01960</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span class="footer-copy">© 2025 North Shore Designs LLC</span><span class="footer-tagline">Built on the North Shore, for the North Shore.</span></div>
+  </footer>
+</div>
+
+<!-- ==================== VISIT / CONTACT PAGE ==================== -->
+<div id="page-visit" class="page">
+  <section>
+    <div class="section-label">Find Us</div>
+    <h1 class="section-title">Come say<br><em>hello.</em></h1>
+
+    <div class="visit-layout">
+      <div>
+        <div class="contact-card">
+          <div class="contact-card-label">Address</div>
+          <div class="contact-card-value">Peabody, MA 01960</div>
+          <a href="https://maps.google.com/?q=Peabody+MA+01960" target="_blank" class="map-link-btn">
+            <span>📍</span> Open in Google Maps
+          </a>
+        </div>
+        <div class="contact-card">
+          <div class="contact-card-label">Email</div>
+          <div class="contact-card-value">
+            <a href="mailto:hello@northshoredesigns.com">hello@northshoredesigns.com</a>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-label" style="margin-top:0;">Availability</div>
+        <h3 style="font-family:var(--font-display);font-size:2.4rem;font-weight:300;color:var(--text);margin-bottom:20px;line-height:1.1;">We're reachable<br><em>whenever you are.</em></h3>
+
+        <!-- Always open card -->
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;margin-bottom:20px;position:relative;overflow:hidden;">
+          <div style="position:absolute;top:0;right:0;width:120px;height:120px;background:radial-gradient(circle at top right, var(--glow), transparent 70%);pointer-events:none;"></div>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+            <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#3dba7a;box-shadow:0 0 10px #3dba7a;animation:pulse 2s infinite;flex-shrink:0;"></span>
+            <span style="font-family:var(--font-mono);font-size:0.68rem;letter-spacing:0.2em;color:#3dba7a;text-transform:uppercase;">Available now</span>
+          </div>
+          <p style="font-family:var(--font-display);font-size:1.35rem;font-style:italic;color:var(--text);line-height:1.7;margin-bottom:0;">Ideas don't keep business hours — and neither do we. Drop us a line any time, day or night. We'll pick it up and get back to you promptly.</p>
+        </div>
+
+        <!-- Response time card -->
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;margin-bottom:20px;">
+          <div style="font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.2em;color:var(--text3);text-transform:uppercase;margin-bottom:10px;">Typical response</div>
+          <div style="display:flex;gap:24px;flex-wrap:wrap;">
+            <div>
+              <div style="font-family:var(--font-display);font-size:1.6rem;color:var(--accent);font-weight:600;">~2 hrs</div>
+              <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text3);letter-spacing:0.1em;">During the day</div>
+            </div>
+            <div style="width:1px;background:var(--border);"></div>
+            <div>
+              <div style="font-family:var(--font-display);font-size:1.6rem;color:var(--gold);font-weight:600;">By morning</div>
+              <div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text3);letter-spacing:0.1em;">Late night messages</div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;">
+          <div style="font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.2em;color:var(--text3);text-transform:uppercase;margin-bottom:12px;">Free brand audit</div>
+          <p style="font-size:0.87rem;color:var(--text2);line-height:1.8;margin-bottom:20px;">Every new inquiry gets an honest, no-pressure look at what your online presence needs. No sales pitch — just real feedback.</p>
+          <button class="btn-primary" style="font-size:0.75rem;" onclick="openChat()">Start the conversation →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand"><div class="nav-logo" style="cursor:default;gap:12px;"><svg width="28" height="28" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;"><circle cx="100" cy="100" r="100" fill="#0b1a2e"/><polygon points="100,72 44,36 38,58" fill="#3d9fd3" opacity="0.22"/><polygon points="100,72 162,40 168,62" fill="#3d9fd3" opacity="0.16"/><ellipse cx="100" cy="158" rx="46" ry="12" fill="#112640"/><rect x="74" y="146" width="52" height="16" rx="2" fill="#122840"/><rect x="88" y="80" width="24" height="70" rx="2" fill="#1e4570"/><rect x="88" y="92" width="24" height="9" fill="#2a5a8a"/><rect x="88" y="112" width="24" height="9" fill="#2a5a8a"/><rect x="88" y="132" width="24" height="9" fill="#2a5a8a"/><rect x="83" y="76" width="34" height="6" rx="1" fill="#3d9fd3"/><rect x="86" y="58" width="28" height="20" rx="3" fill="#3d9fd3"/><polygon points="83,58 117,58 110,48 90,48" fill="#5ab8e8"/><circle cx="100" cy="50" r="7" fill="#ffffff" opacity="0.95"/><circle cx="100" cy="50" r="4" fill="#3d9fd3"/><path d="M54 164 Q66 158 78 164 Q90 170 102 164 Q114 158 126 164 Q138 170 148 164" stroke="#3d9fd3" stroke-width="1.8" fill="none" stroke-linecap="round" opacity="0.7"/><circle cx="148" cy="46" r="4" fill="#c8a46e" opacity="0.85"/></svg><span style="display:flex;flex-direction:column;line-height:1;"><span style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.1rem;font-weight:600;color:var(--text);">North Shore</span><span style="font-family:'DM Mono',monospace;font-size:0.5rem;letter-spacing:0.22em;color:#3d9fd3;text-transform:uppercase;">Designs</span></span></div><p>North Shore web design for businesses that care about the details.</p></div>
+      <div class="footer-col"><div class="footer-col-title">Navigate</div><ul><li><a onclick="showPage('home')">Home</a></li><li><a onclick="showPage('services')">Services</a></li><li><a onclick="showPage('work')">Work</a></li><li><a onclick="showPage('about')">About</a></li></ul></div>
+      <div class="footer-col"><div class="footer-col-title">Email</div><ul><li><a href="mailto:hello@northshoredesigns.com">hello@northshoredesigns.com</a></li></ul></div>
+      <div class="footer-col"><div class="footer-col-title">Availability</div><ul><li><a style="color:var(--text2);">Always reachable</a></li><li><a href="mailto:hello@northshoredesigns.com">hello@northshoredesigns.com</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><span class="footer-copy">© 2025 North Shore Designs LLC</span><span class="footer-tagline">Built on the North Shore, for the North Shore.</span></div>
+  </footer>
+</div>
+
+<!-- ==================== MODAL ==================== -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-icon" id="modal-icon"></div>
+    <div class="modal-name" id="modal-name"></div>
+    <div class="modal-price" id="modal-price"></div>
+    <div class="modal-desc" id="modal-desc"></div>
+    <div class="modal-funfact">
+      <div class="modal-funfact-label">✦ Industry Insight</div>
+      <div class="modal-funfact-text" id="modal-funfact"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== CHATBOT ==================== -->
+<button class="chat-bubble" onclick="toggleChat()" id="chat-bubble">
+  💬
+  <span class="chat-dot"></span>
+</button>
+
+<div class="chat-window" id="chat-window">
+  <div class="chat-header">
+    <div class="chat-header-left">
+      <div class="chat-avatar">🌊</div>
+      <div>
+        <div class="chat-header-name">North Shore Designs</div>
+        <div class="chat-header-sub">Typically replies in minutes</div>
+      </div>
+    </div>
+    <button class="chat-header-close" onclick="closeChat()">✕</button>
+  </div>
+  <div class="chat-messages" id="chat-messages">
+    <div class="chat-msg bot">Hey! 👋 I'm the North Shore Designs assistant. Ask me about services, pricing, location, or hours — or just say hi!</div>
+  </div>
+  <div class="chat-quick-btns">
+    <button class="chat-quick-btn" onclick="quickSend('What services do you offer?')">Services</button>
+    <button class="chat-quick-btn" onclick="quickSend('How much does a website cost?')">Pricing</button>
+    <button class="chat-quick-btn" onclick="quickSend('Where are you located?')">Location</button>
+    <button class="chat-quick-btn" onclick="quickSend('What are your hours?')">Hours</button>
+  </div>
+  <div class="chat-input-row">
+    <input class="chat-input" id="chat-input" placeholder="Ask anything..." onkeydown="if(event.key==='Enter')sendChat()">
+    <button class="chat-send" onclick="sendChat()">→</button>
+  </div>
+</div>
+
+<script>
+// ========== DATA ==========
+const items = {
+  // Services
+  'starter': {
+    icon: '⚡',
+    name: 'Starter Site',
+    price: 'From $2,400 · Delivery in ~2 weeks',
+    desc: 'A clean, focused 5-page website built to convert visitors into customers. Includes homepage, about, services, contact, and one more page of your choice. Custom design, mobile-responsive, and SEO-ready out of the box. Perfect for new businesses or anyone embarrassed by their current site.',
+    funfact: 'Research by Stanford University found that 75% of people judge a company\'s credibility based on its website design — making it the single biggest factor in first impressions, ahead of price, reviews, or word of mouth.'
+  },
+  'signature': {
+    icon: '🎯',
+    name: 'Signature Site',
+    price: 'From $5,500 · Delivery in 4–6 weeks',
+    desc: 'Our flagship package. A fully custom visual identity created from scratch — including color palette, typography system, and motion design. Unlimited pages, custom animations, integrated contact forms, Google Analytics, and a site that genuinely looks like a brand, not a template. This is the one that gets shared.',
+    funfact: 'Users form an opinion about a website in just 50 milliseconds — 0.05 seconds. Custom animation and a strong visual hierarchy during that micro-moment can mean the difference between a bounce and a booking.'
+  },
+  'ecommerce': {
+    icon: '🛍️',
+    name: 'eCommerce Site',
+    price: 'From $7,800 · Delivery in 6–8 weeks',
+    desc: 'A full online store built for North Shore businesses. Whether you\'re selling candles in Marblehead or lobster rolls in Gloucester, we\'ll build you a store that makes buying feel as good as the product. Includes product catalog, inventory management, secure checkout, and mobile-first design.',
+    funfact: 'Mobile commerce now accounts for over 60% of all online shopping. Shops with mobile-optimized checkout see an average 35% higher conversion rate compared to desktop-only designs — which is why we build mobile-first, always.'
+  },
+  'restaurant': {
+    icon: '🍽️',
+    name: 'Restaurant Package',
+    price: 'From $4,200 · Delivery in 3–4 weeks',
+    desc: 'Purpose-built for North Shore restaurants, bars, and cafés. Includes a fully managed digital menu (update it yourself anytime), online reservation integration, event calendar, and a design that makes people hungry before they arrive. We know what restaurant customers need — you\'ve seen our work around town.',
+    funfact: 'A study by OpenTable found that restaurants with a mobile-optimized website receive 80% more reservation requests than those with desktop-only sites. Hungry people are almost always on their phones.'
+  },
+  'logokit': {
+    icon: '✏️',
+    name: 'Logo & Mark',
+    price: 'From $900 · Delivery in 1–2 weeks',
+    desc: 'Three distinct logomark concepts with two rounds of revisions. You\'ll receive SVG, PNG, and PDF files in full and transparent backgrounds, plus a simple one-page usage guide covering minimum sizes, color variants, and what not to do with your new mark.',
+    funfact: 'The Nike Swoosh was designed in 1971 by graphic design student Carolyn Davidson for just $35. Nike later gifted her company stock that was worth over $640,000 — proof that logo value isn\'t about how much you paid, but how well it was crafted.'
+  },
+  'fullbrand': {
+    icon: '🎨',
+    name: 'Full Brand Identity',
+    price: 'From $2,800 · Delivery in 3–4 weeks',
+    desc: 'Everything you need to look consistent across every touchpoint. Logo system, color palette with hex/RGB/CMYK values, typography stack, photography style guide, social media templates (Instagram, Facebook), business card layout, and a comprehensive brand guidelines PDF you can hand to any designer or printer.',
+    funfact: 'Consistent brand presentation across all platforms increases revenue by up to 23%, according to a Lucidpress study. That consistency is only possible when every design decision is codified in a brand guide — which is exactly what this delivers.'
+  },
+  'rebrand': {
+    icon: '🔄',
+    name: 'Rebrand',
+    price: 'From $3,500 · Timeline varies',
+    desc: 'You\'ve outgrown your old look — or maybe you never loved it to begin with. We start with a full brand audit to understand what\'s working, interview stakeholders, and build you a brand that reflects who you actually are today. Includes a phased rollout plan so nothing goes dark during the transition.',
+    funfact: 'Airbnb\'s 2014 rebrand (the "Bélo" symbol) was met with widespread ridicule online. Within two years, the company\'s valuation doubled. Brand refresh discomfort is almost always short-lived; the long-term impact of a stronger identity is not.'
+  },
+  'localseo': {
+    icon: '📍',
+    name: 'Local SEO',
+    price: 'From $650/month · Minimum 3-month commitment',
+    desc: 'We own local search for our clients. Monthly work includes keyword research, on-page optimization, Google Business Profile management, local citation building across 50+ directories, review response, and a monthly report you\'ll actually understand. Most clients see measurable ranking improvements within 60–90 days.',
+    funfact: '"Near me" Google searches have grown over 900% in the past five years. Being the first local result for your category isn\'t a nice-to-have — it\'s worth thousands of dollars in monthly revenue for most small businesses.'
+  },
+  'content': {
+    icon: '✍️',
+    name: 'Content Writing',
+    price: 'From $250/page or $180/blog post',
+    desc: 'Copy written by a human who actually lives on the North Shore and understands your audience. Website pages that convert, blog posts that rank, and email newsletters your subscribers actually open. We match your brand voice, optimize for search intent, and deliver content that sounds like you — but sharper.',
+    funfact: 'Businesses that blog regularly generate 67% more leads per month than those that don\'t, according to HubSpot. For a local business, one well-written blog post targeting a North Shore search term can drive customers for years with no ongoing cost.'
+  },
+  'analytics': {
+    icon: '📊',
+    name: 'Analytics Setup',
+    price: 'From $450 one-time · Monthly dashboards $150/mo',
+    desc: 'We set up Google Analytics 4, Google Search Console, and a custom Looker Studio dashboard that shows you exactly what\'s working — in plain English. Know where your customers come from, which pages convert, and what to fix. No more flying blind.',
+    funfact: 'Google Analytics was first released in 2005 after Google acquired Urchin Software for roughly $30 million. It now has over 28 million websites using it — making it by far the most widely deployed software on the internet.'
+  },
+  'care-basic': {
+    icon: '🛡️',
+    name: 'Basic Care Plan',
+    price: '$99/month · Cancel anytime',
+    desc: 'Your website keeps running, period. Monthly security updates, plugin maintenance, daily automated backups with 30-day retention, uptime monitoring with instant alerts if your site goes down, and annual SSL certificate renewal. Think of it as insurance for the asset you just invested in.',
+    funfact: 'The average cost of a successful cyberattack on a small business website is $200,000 — enough to force 60% of affected businesses to close within six months. Monthly maintenance isn\'t a luxury; it\'s the cheapest protection you can buy.'
+  },
+  'care-pro': {
+    icon: '⭐',
+    name: 'Pro Care Plan',
+    price: '$249/month · Cancel anytime',
+    desc: 'Everything in Basic, plus 2 hours of content updates per month (new photos, text changes, event promotions), priority response within 4 hours on business days, and a quarterly 30-minute strategy call to review performance and plan improvements. Our most popular ongoing plan.',
+    funfact: 'Websites that are regularly updated rank higher in Google searches. Google\'s crawlers index active sites more frequently, meaning fresh content doesn\'t just keep customers informed — it directly improves your visibility in search results.'
+  },
+  'care-elite': {
+    icon: '👑',
+    name: 'Elite Care Plan',
+    price: '$599/month · Cancel anytime',
+    desc: 'For businesses where the website is the business. Unlimited content updates with same-day turnaround, 2-hour emergency response (even weekends), monthly SEO performance report, quarterly UX review, and a dedicated account manager who knows your site inside and out. No ticket queues. Just one person who picks up the phone.',
+    funfact: 'Amazon found that every 100ms of website load time delay costs them 1% in revenue — a figure that has driven billions in infrastructure investment. For local businesses, fast and fresh beats slow and stale every single time.'
+  },
+  // Work portfolio modals
+  'w-harbor': {
+    icon: '🍽️',
+    name: 'Breakwater Kitchen',
+    price: 'Signature Site + Restaurant Package — 2024',
+    desc: 'A deep navy and warm amber website for this coastal North Shore restaurant. Full digital menu with dietary filters, reservation embed, event calendar for their monthly chef\'s tasting nights, and a custom-illustrated hero. The owners reported a significant jump in online bookings within the first quarter post-launch.',
+    funfact: 'The North Shore coastline has been a hub of New England\'s fishing and dining culture for over 400 years — restaurants here carry a heritage that few regions can match, and a great website helps tell that story to every new visitor who finds them online.'
+  },
+  'w-tide': {
+    icon: '💪',
+    name: 'Ironclad Training Co.',
+    price: 'Signature Site + Brand Identity — 2024',
+    desc: 'A high-contrast, energetic site for this North Shore gym with class schedule, trainer bios, membership pricing tiers, and a lead capture flow built around free trial signups. Custom green-and-black visual identity built around the idea of earned strength — raw, honest, and built to last.',
+    funfact: 'Studies show that gym members who find their gym via a professional, easy-to-navigate website have a 30% higher 6-month retention rate — partly because a polished first impression sets expectations about the quality of the experience inside.'
+  },
+  'w-saltwick': {
+    icon: '🕯️',
+    name: 'Driftwood & Co.',
+    price: 'eCommerce + Brand Identity — 2023',
+    desc: 'A warm, editorial-style online store for this North Shore home goods maker. Warm cream and burnished gold palette, product photography art direction, custom scent-pairing quiz that drives average order value up significantly, and a storytelling about page that has caught the attention of regional lifestyle publications.',
+    funfact: 'Home fragrance is one of the fastest-growing retail categories in the US, with the global candle market projected to surpass $13 billion by 2028. Small artisan makers who invest in strong online branding capture a disproportionate share of that premium market.'
+  },
+  'w-cape': {
+    icon: '⚖️',
+    name: 'Harmon & Voss Legal',
+    price: 'Signature Site + Local SEO — 2024',
+    desc: 'A trust-building, authoritative site for this North Shore law firm. Restrained navy and platinum palette, practice area pages with FAQs targeting common local search queries, attorney bios that feel genuinely human, and a consultation booking flow. Now ranking on the first page for multiple high-value local legal search terms.',
+    funfact: 'Salem, MA holds the distinction of being one of the few US cities with a purpose-built legal infrastructure dating to 1692 — when the famous witch trials revealed the catastrophic consequences of a legal system without proper due process, influencing American jurisprudence ever since.'
+  },
+  'w-rockport': {
+    icon: '🏠',
+    name: 'Ledge & Shore Realty',
+    price: 'Signature Site + Analytics — 2023',
+    desc: 'A listing-driven real estate site with property search, neighborhood guide content for towns across the North Shore, agent bios, and a seller valuation tool. The property search loads fast enough to browse while standing in someone\'s driveway — which is genuinely how North Shore buyers work.',
+    funfact: 'The North Shore real estate market has some of the most distinctive home styles in New England — from Salem\'s Federal-era mansions to Rockport\'s shingled cottages. Buyers often choose neighborhoods based on architectural character, making strong visual storytelling on a realtor\'s site especially powerful.'
+  },
+  'w-ipswich': {
+    icon: '💆',
+    name: 'Saltmarsh Wellness',
+    price: 'Signature Site + Local SEO + Content — 2024',
+    desc: 'A serene, atmospheric site with layered soft gradients, treatment menus with booking integration, gift card e-commerce, and a content strategy targeting wellness-related searches across Essex County. The site now drives the majority of new client bookings — a dramatic shift from their previous word-of-mouth-only model.',
+    funfact: 'The wellness industry globally is worth over $5.6 trillion, but small independent spas win on intimacy and local trust — two things a well-crafted website communicates instantly. Most spa visitors decide before they ever call: your site is the audition.'
+  }
+};
+
+// ========== MODAL ==========
+function openModal(id) {
+  const item = items[id];
+  if (!item) return;
+  document.getElementById('modal-icon').textContent = item.icon;
+  document.getElementById('modal-name').textContent = item.name;
+  document.getElementById('modal-price').textContent = item.price;
+  document.getElementById('modal-desc').textContent = item.desc;
+  document.getElementById('modal-funfact').textContent = item.funfact;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ========== PAGE SYSTEM ==========
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const el = document.getElementById('nav-' + name);
+  if (el) el.classList.add('active');
+  window.scrollTo(0, 0);
+  if (name === 'visit') {}
+}
+
+// ========== TABS ==========
+function switchTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ========== THEME ==========
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.dataset.theme === 'dark';
+  html.dataset.theme = isDark ? 'light' : 'dark';
+  document.querySelector('.theme-toggle').textContent = isDark ? '🌙' : '☀️';
+}
+
+// ========== MOBILE MENU ==========
+function toggleMobile() {
+  const menu = document.getElementById('mobile-menu');
+  const ham = document.getElementById('hamburger');
+  menu.classList.toggle('open');
+  ham.classList.toggle('open');
+}
+function closeMobile() {
+  document.getElementById('mobile-menu').classList.remove('open');
+  document.getElementById('hamburger').classList.remove('open');
+}
+
+
+// ========== CHATBOT ==========
+let chatOpen = false;
+
+function openChat() { document.getElementById('chat-window').classList.add('open'); chatOpen = true; }
+function closeChat() { document.getElementById('chat-window').classList.remove('open'); chatOpen = false; }
+function toggleChat() { chatOpen ? closeChat() : openChat(); }
+
+const chatRules = [
+  { k: ['hour','open','close','when','time','available'], r: 'We\'re reachable whenever you are — no business hours here. Send us an email at hello@northshoredesigns.com any time, day or night. During the day we typically reply within a couple hours, late-night messages get a response by morning. 🌊' },
+  { k: ['address','location','where','find','direction','park','transit','commute'], r: 'We\'re based in Peabody, MA 01960. Email us at hello@northshoredesigns.com and we\'ll send you directions! 📍' },
+  { k: ['phone','call','number','reach','contact','email'], r: 'Best way to reach us is email — hello@northshoredesigns.com. We typically respond within a few hours on business days! 📬' },
+  { k: ['price','cost','much','afford','budget','quote','rate','package','starter','signature','ecommerce','care'], r: 'Starter sites start at $2,400, our Signature sites from $5,500, eCommerce from $7,800, and Restaurant packages from $4,200. Care plans run $99–$599/month. Every project gets a free custom quote — no hidden fees! 💸' },
+  { k: ['service','offer','do','build','design','brand','seo','logo','content','rebranding'], r: 'We do web design, full brand identity, local SEO, content writing, analytics setup, and ongoing website care plans. Basically everything to make your business look and rank better online. Check out our Services page for details!' },
+  { k: ['north shore','local','salem','gloucester','marblehead','beverly','swampscott','ipswich','newburyport','rockport','manchester','essex'], r: 'North Shore born and raised! Our team lives across Salem, Beverly, and Newburyport. We know the towns, the businesses, and the communities we serve — that\'s what makes us different from a faceless Boston agency. 🌊' },
+  { k: ['how long','timeline','turnaround','week','fast'], r: 'Starter sites are ~2 weeks. Signature sites 4–6 weeks. Restaurant packages 3–4 weeks. eCommerce 6–8 weeks. We don\'t rush quality, but we don\'t drag things out either. ⏱️' },
+  { k: ['award','best','win','recognition','voted'], r: 'We were voted #1 Web Studio on the North Shore by local business owners — the kind of recognition that actually means something to us. When the people we serve vouch for you, that\'s the real award. ✦' },
+  { k: ['free','audit','consult','start','begin','first'], r: 'Every new inquiry gets a free brand audit and 20-minute strategy call. No sales pressure, just honest feedback on what your site needs. You can start by emailing us or clicking "Let\'s Talk" in the nav! 🎯' },
+  { k: ['team','people','who','staff','founder','owner','person'], r: 'North Shore Designs is founder-run — one person who moved to the North Shore, built apps and websites, and decided to put those skills to work for local small businesses. No big agency overhead, no junior staff handing off your project. Just someone who genuinely cares. 🤝' },
+  { k: ['hi','hello','hey','howdy','sup','yo'], r: 'Hey there! 👋 Welcome to North Shore Designs. We build websites for North Shore businesses that actually work. What can I help you with today? Ask me about services, pricing, our team, or anything else!' },
+  { k: ['thanks','thank','great','awesome','perfect','love'], r: 'So glad I could help! 😊 If you\'re ready to talk about your project, hit "Let\'s Talk" in the nav or email us at hello@northshoredesigns.com. We\'d love to work with you.' }
+];
+
+function revealEmail() {
+  const el = document.getElementById('email-reveal');
+  const hint = document.getElementById('email-hint');
+  const card = document.getElementById('email-card');
+  el.style.filter = 'blur(0px)';
+  el.style.userSelect = 'auto';
+  el.innerHTML = '<a href="mailto:hello@northshoredesigns.com" style="color:var(--accent);">hello@northshoredesigns.com</a>';
+  hint.style.opacity = '0';
+  card.style.cursor = 'default';
+  card.onclick = null;
+  document.querySelector('#email-card .contact-card-label').textContent = 'Email';
+}
+
+function getReply(msg) {
+  const lower = msg.toLowerCase();
+  for (const rule of chatRules) {
+    if (rule.k.some(k => lower.includes(k))) return rule.r;
+  }
+  return "Great question! That's a bit too specific for me to answer automatically. Shoot us an email at hello@northshoredesigns.com and someone from our team will get back to you right away! 🌊";
+}
+
+function addMsg(text, who) {
+  const msgs = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = 'chat-msg ' + who;
+  div.textContent = text;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function sendChat() {
+  const input = document.getElementById('chat-input');
+  const msg = input.value.trim();
+  if (!msg) return;
+  addMsg(msg, 'user');
+  input.value = '';
+  setTimeout(() => addMsg(getReply(msg), 'bot'), 600);
+}
+
+function quickSend(text) {
+  addMsg(text, 'user');
+  setTimeout(() => addMsg(getReply(text), 'bot'), 600);
+}
+</script>
+</body>
+</html>
