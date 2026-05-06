@@ -80,22 +80,6 @@ body::before {
   opacity: 0.6;
 }
 
-/* ========== ANNOUNCEMENT BANNER ========== */
-#banner {
-  background: linear-gradient(90deg, var(--accent3), var(--accent2), var(--accent3));
-  background-size: 200% 100%;
-  animation: bannerShift 6s linear infinite;
-  color: #fff;
-  text-align: center;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
-  padding: 9px 20px;
-  position: relative;
-  z-index: 100;
-}
-@keyframes bannerShift { 0%{background-position:0%} 100%{background-position:200%} }
-
 /* ========== NAV ========== */
 nav {
   position: sticky;
@@ -154,8 +138,12 @@ nav {
 .nav-actions { display: flex; align-items: center; gap: 10px; }
 
 .btn-chat-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   background: var(--accent);
   color: #fff;
+  text-decoration: none;
   border: none;
   padding: 8px 18px;
   border-radius: 30px;
@@ -233,7 +221,7 @@ nav {
 
 /* ========== HERO ========== */
 #hero {
-  min-height: calc(100vh - 104px);
+  min-height: calc(100vh - 64px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -618,6 +606,10 @@ section {
   cursor: pointer;
 }
 .work-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(0,0,0,0.3); }
+.work-card.link-card:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
 
 .work-card-visual {
   height: 220px;
@@ -651,26 +643,6 @@ section {
   gap: 18px;
 }
 
-.brand-lockup-text {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.brand-lockup-title {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  line-height: 0.95;
-  color: #fff;
-}
-
-.brand-lockup-subtitle {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-}
-
 .brand-maki {
   background:
     radial-gradient(circle at 24% 26%, rgba(255,255,255,0.08), transparent 32%),
@@ -696,35 +668,28 @@ section {
   color: rgba(120,198,255,0.9);
 }
 
-.maki-mark,
-.lm-mark {
-  width: 78px;
-  height: 78px;
-  flex-shrink: 0;
-}
-
 .maki-lockup {
-  gap: 14px;
+  justify-content: center;
+  gap: 22px;
 }
 
-.maki-lockup .brand-lockup-text {
-  gap: 0;
+.brand-lastminute .brand-lockup {
+  justify-content: center;
 }
 
-.maki-wordmark {
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: 2.7rem;
-  line-height: 0.9;
-  letter-spacing: 0.01em;
-  color: #f7f7f7;
+.portfolio-logo {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
-.maki-submark {
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.7);
+.maki-logo {
+  width: min(440px, 94%);
+  height: auto;
+}
+
+.lastminute-logo {
+  width: min(188px, 58%);
 }
 
 .work-card-info {
@@ -1071,165 +1036,6 @@ section {
   color: var(--text);
 }
 
-/* ========== CHATBOT ========== */
-.chat-bubble {
-  position: fixed;
-  bottom: 28px; right: 28px;
-  width: 54px; height: 54px;
-  background: var(--accent);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  z-index: 8000;
-  box-shadow: 0 8px 32px var(--glow);
-  transition: transform 0.2s, box-shadow 0.2s;
-  border: none;
-  font-size: 1.3rem;
-  color: #fff;
-}
-.chat-bubble:hover { transform: scale(1.08); box-shadow: 0 12px 40px var(--glow); }
-.chat-dot {
-  position: absolute;
-  top: 2px; right: 2px;
-  width: 12px; height: 12px;
-  background: var(--gold);
-  border-radius: 50%;
-  border: 2px solid var(--bg);
-  animation: pulse 2s infinite;
-}
-@keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.2)} }
-
-.chat-window {
-  position: fixed;
-  bottom: 96px; right: 28px;
-  width: 360px;
-  max-height: 500px;
-  background: var(--surface);
-  border: 1px solid var(--border2);
-  border-radius: 20px;
-  display: none;
-  flex-direction: column;
-  z-index: 8000;
-  box-shadow: 0 24px 80px rgba(0,0,0,0.4);
-  overflow: hidden;
-  animation: chatIn 0.3s ease forwards;
-}
-.chat-window.open { display: flex; }
-@keyframes chatIn { from{opacity:0;transform:translateY(20px) scale(0.95)} to{opacity:1;transform:none} }
-
-.chat-header {
-  background: var(--accent);
-  padding: 16px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.chat-header-left { display: flex; align-items: center; gap: 10px; }
-.chat-avatar {
-  width: 36px; height: 36px;
-  background: rgba(255,255,255,0.2);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1rem;
-}
-.chat-header-name { font-family: var(--font-sans); font-size: 0.9rem; font-weight: 600; color: #fff; }
-.chat-header-sub { font-family: var(--font-mono); font-size: 0.62rem; color: rgba(255,255,255,0.7); }
-.chat-header-close {
-  background: rgba(255,255,255,0.15);
-  border: none;
-  color: #fff;
-  width: 30px; height: 30px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 1rem;
-  display: flex; align-items: center; justify-content: center;
-}
-
-.chat-messages {
-  flex: 1;
-  overflow-y: auto;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  scroll-behavior: smooth;
-}
-
-.chat-msg {
-  max-width: 85%;
-  padding: 10px 14px;
-  border-radius: 16px;
-  font-size: 0.85rem;
-  line-height: 1.6;
-}
-.chat-msg.bot {
-  background: var(--surface2);
-  border: 1px solid var(--border);
-  color: var(--text);
-  align-self: flex-start;
-  border-bottom-left-radius: 4px;
-}
-.chat-msg.user {
-  background: var(--accent);
-  color: #fff;
-  align-self: flex-end;
-  border-bottom-right-radius: 4px;
-}
-
-.chat-quick-btns {
-  padding: 8px 16px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  border-top: 1px solid var(--border);
-}
-.chat-quick-btn {
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.06em;
-  color: var(--accent);
-  background: var(--glow2);
-  border: 1px solid var(--border2);
-  padding: 5px 10px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.chat-quick-btn:hover { background: var(--glow); }
-
-.chat-input-row {
-  padding: 14px 16px;
-  display: flex;
-  gap: 8px;
-  border-top: 1px solid var(--border);
-}
-.chat-input {
-  flex: 1;
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  color: var(--text);
-  padding: 10px 14px;
-  border-radius: 30px;
-  font-family: var(--font-sans);
-  font-size: 0.82rem;
-  outline: none;
-  transition: border-color 0.2s;
-}
-.chat-input:focus { border-color: var(--accent); }
-.chat-input::placeholder { color: var(--text3); }
-.chat-send {
-  background: var(--accent);
-  border: none;
-  color: #fff;
-  width: 38px; height: 38px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 1rem;
-  display: flex; align-items: center; justify-content: center;
-  transition: background 0.2s;
-}
-.chat-send:hover { background: var(--accent2); }
-
 /* ========== FOOTER ========== */
 footer {
   background: var(--bg2);
@@ -1403,7 +1209,6 @@ footer {
   .footer-grid { grid-template-columns: 1fr; }
   .footer-bottom { flex-direction: column; align-items: flex-start; }
   .modal { padding: 28px 20px; }
-  .chat-window { width: calc(100vw - 32px); right: 16px; }
 }
 
 /* ========== WORK CARD COLORS ========== */
@@ -1416,9 +1221,6 @@ footer {
 </style>
 </head>
 <body>
-
-<!-- ANNOUNCEMENT BANNER -->
-<div id="banner">✦ Voted #1 Web Studio on the North Shore by Local Business Owners &nbsp;·&nbsp; <a href="mailto:hello@northshoredesigns.com">Get in touch</a> &nbsp;·&nbsp; Free Brand Audit for New Clients ✦</div>
 
 <!-- NAV -->
 <nav>
@@ -1454,14 +1256,14 @@ footer {
   </a>
   <ul class="nav-links">
     <li><a onclick="showPage('home')" class="active" id="nav-home">Home</a></li>
+    <li><a onclick="showPage('work')" id="nav-work">Our Work</a></li>
     <li><a onclick="showPage('services')" id="nav-services">Services</a></li>
-    <li><a onclick="showPage('work')" id="nav-work">Work</a></li>
     <li><a onclick="showPage('about')" id="nav-about">About</a></li>
     <li><a onclick="showPage('visit')" id="nav-visit">Contact</a></li>
   </ul>
   <div class="nav-actions">
     <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">🌙</button>
-    <button class="btn-chat-nav" onclick="openChat()">Let's Talk</button>
+    <a class="btn-chat-nav" href="mailto:hello@northshoredesigns.com">Let's Talk</a>
     <button class="hamburger" id="hamburger" onclick="toggleMobile()">
       <span></span><span></span><span></span>
     </button>
@@ -1471,11 +1273,11 @@ footer {
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobile-menu">
   <a onclick="showPage('home');closeMobile()">Home</a>
+  <a onclick="showPage('work');closeMobile()">Our Work</a>
   <a onclick="showPage('services');closeMobile()">Services</a>
-  <a onclick="showPage('work');closeMobile()">Work</a>
   <a onclick="showPage('about');closeMobile()">About</a>
   <a onclick="showPage('visit');closeMobile()">Contact</a>
-  <a onclick="openChat();closeMobile()">Let's Talk →</a>
+  <a href="mailto:hello@northshoredesigns.com" onclick="closeMobile()">Let's Talk →</a>
 </div>
 
 <!-- ==================== HOME PAGE ==================== -->
@@ -1543,9 +1345,9 @@ footer {
       <div class="hero-eyebrow">North Shore's Web Design Studio</div>
       <h1 class="hero-title">
         <em>Websites</em> that<br>
-        <span class="title-line2">command attention.</span>
+        <span class="title-line2">feel like you.</span>
       </h1>
-      <p class="hero-sub">Where the Shore meets digital</p>
+      <p class="hero-sub">Clean, thoughtful sites for businesses on the North Shore and beyond.</p>
       <div class="hero-ctas">
         <button class="btn-primary" onclick="showPage('work')">See Our Work</button>
         <button class="btn-secondary" onclick="showPage('services')">View Services</button>
@@ -1581,8 +1383,8 @@ footer {
   <!-- WHAT WE DO -->
   <section>
     <div class="section-label">What We Do</div>
-    <h2 class="section-title">Design that<br><em>sells the shore.</em></h2>
-    <p class="section-body">We build websites for North Shore businesses that look like they were made by a team in SoHo — because your customers deserve to be impressed before they ever walk through your door.</p>
+    <h2 class="section-title">Design on the<br><em>North Shore.</em></h2>
+    <p class="section-body">We make websites and brands for businesses on the North Shore and beyond. The North Shore is home, and it is where we most love to build, but we are always happy to help great businesses outside of it too.</p>
 
     <div class="process-steps">
       <div class="process-step">
@@ -1654,7 +1456,7 @@ footer {
     <div class="section-label" style="justify-content:center;">Ready?</div>
     <h2 class="section-title" style="text-align:center;">Your site should be<br><em>as good as your business.</em></h2>
     <p style="color:var(--text2);text-align:center;max-width:460px;margin:0 auto 40px;line-height:1.8;font-size:0.95rem;">Every day with a mediocre website is a customer who bounced. Let's fix that — free brand audit for every new project inquiry.</p>
-    <button class="btn-primary" style="font-size:0.82rem;" onclick="openChat()">Start a Conversation →</button>
+        <a class="btn-primary" style="font-size:0.82rem;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;" href="mailto:hello@northshoredesigns.com">Start a Conversation →</a>
   </section>
 
   <!-- FOOTER on home -->
@@ -1678,8 +1480,6 @@ footer {
         <ul>
           <li><a onclick="showPage('services')">Web Design</a></li>
           <li><a onclick="showPage('services')">Brand Identity</a></li>
-          <li><a onclick="showPage('services')">SEO & Content</a></li>
-          <li><a onclick="showPage('services')">Maintenance</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -1687,7 +1487,7 @@ footer {
         <ul>
           <li><a href="mailto:hello@northshoredesigns.com">hello@northshoredesigns.com</a></li>
           <li><a onclick="showPage('visit')">Visit Us</a></li>
-          <li><a onclick="openChat()">Live Chat</a></li>
+          <li><a href="mailto:hello@northshoredesigns.com">Email Us</a></li>
         </ul>
       </div>
     </div>
@@ -1709,8 +1509,6 @@ footer {
   <div class="services-tabs">
     <button class="tab-btn active" onclick="switchTab('design', this)">Web Design</button>
     <button class="tab-btn" onclick="switchTab('brand', this)">Brand Identity</button>
-    <button class="tab-btn" onclick="switchTab('seo', this)">SEO & Content</button>
-    <button class="tab-btn" onclick="switchTab('care', this)">Care Plans</button>
   </div>
 
   <div class="services-content">
@@ -1763,7 +1561,7 @@ footer {
           <div class="service-card-icon">✏️</div>
           <div class="service-card-name">Logo & Mark</div>
           <div class="service-card-desc">A distinctive logomark and wordmark that works everywhere — from business cards to building signage. Three concepts, two revision rounds.</div>
-          <div class="service-card-price">From $900</div>
+          <div class="service-card-price">$1,000</div>
           <div class="service-tags">
             <span class="pill">3 concepts</span><span class="pill">Vector files</span><span class="pill">Usage guide</span>
           </div>
@@ -1772,7 +1570,7 @@ footer {
           <div class="service-card-icon">🎨</div>
           <div class="service-card-name">Full Brand Identity</div>
           <div class="service-card-desc">Logo, color palette, typography, photography style, social templates, and a brand guidelines PDF. Everything you need to look consistent everywhere.</div>
-          <div class="service-card-price">From $2,800</div>
+          <div class="service-card-price">$2,000</div>
           <div class="service-tags">
             <span class="pill">Brand guidelines</span><span class="pill">Social kit</span><span class="pill">Print ready</span>
           </div>
@@ -1781,7 +1579,7 @@ footer {
           <div class="service-card-icon">🔄</div>
           <div class="service-card-name">Rebrand</div>
           <div class="service-card-desc">You've outgrown your old look. We'll audit what's working, retire what isn't, and build you something that reflects who you actually are now.</div>
-          <div class="service-card-price">From $3,500</div>
+          <div class="service-card-price">$2,500</div>
           <div class="service-tags">
             <span class="pill">Brand audit</span><span class="pill">Stakeholder process</span><span class="pill">Rollout plan</span>
           </div>
@@ -1789,71 +1587,6 @@ footer {
       </div>
     </div>
 
-    <!-- SEO TAB -->
-    <div class="tab-panel" id="tab-seo">
-      <div class="services-grid">
-        <div class="service-card" onclick="openModal('localseo')">
-          <div class="service-card-icon">📍</div>
-          <div class="service-card-name">Local SEO</div>
-          <div class="service-card-desc">Own Google for your town. We optimize your site, Google Business Profile, and local citations so customers find you first — not your competitor.</div>
-          <div class="service-card-price">From $650/mo</div>
-          <div class="service-tags">
-            <span class="pill">Google Business</span><span class="pill">Citation building</span><span class="pill">Monthly reports</span>
-          </div>
-        </div>
-        <div class="service-card" onclick="openModal('content')">
-          <div class="service-card-icon">✍️</div>
-          <div class="service-card-name">Content Writing</div>
-          <div class="service-card-desc">Sharp, SEO-smart copy written by humans who actually live on the North Shore. Website pages, blog posts, and email newsletters that don't sound like a bot.</div>
-          <div class="service-card-price">From $250/page</div>
-          <div class="service-tags">
-            <span class="pill">SEO optimized</span><span class="pill">Brand voice</span><span class="pill">North Shore expertise</span>
-          </div>
-        </div>
-        <div class="service-card" onclick="openModal('analytics')">
-          <div class="service-card-icon">📊</div>
-          <div class="service-card-name">Analytics Setup</div>
-          <div class="service-card-desc">Know exactly where your customers come from and what they do on your site. GA4, Search Console, and a monthly dashboard that actually makes sense.</div>
-          <div class="service-card-price">From $450</div>
-          <div class="service-tags">
-            <span class="pill">GA4</span><span class="pill">Search Console</span><span class="pill">Monthly reports</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- CARE PLANS TAB -->
-    <div class="tab-panel" id="tab-care">
-      <div class="services-grid">
-        <div class="service-card" onclick="openModal('care-basic')">
-          <div class="service-card-icon">🛡️</div>
-          <div class="service-card-name">Basic Care</div>
-          <div class="service-card-desc">Security updates, plugin maintenance, monthly backups, and uptime monitoring. Your site stays healthy while you focus on your business.</div>
-          <div class="service-card-price">$99/mo</div>
-          <div class="service-tags">
-            <span class="pill">Security updates</span><span class="pill">Monthly backups</span><span class="pill">Uptime monitoring</span>
-          </div>
-        </div>
-        <div class="service-card" onclick="openModal('care-pro')">
-          <div class="service-card-icon">⭐</div>
-          <div class="service-card-name">Pro Care</div>
-          <div class="service-card-desc">Everything in Basic plus 2 hours of content updates monthly, priority support, and a quarterly performance review. The one our long-term clients love.</div>
-          <div class="service-card-price">$249/mo</div>
-          <div class="service-tags">
-            <span class="pill">2hrs content updates</span><span class="pill">Priority support</span><span class="pill">Quarterly review</span>
-          </div>
-        </div>
-        <div class="service-card" onclick="openModal('care-elite')">
-          <div class="service-card-icon">👑</div>
-          <div class="service-card-name">Elite Care</div>
-          <div class="service-card-desc">Unlimited content updates, same-day support, monthly SEO reporting, and a dedicated point of contact. For businesses where the website is mission-critical.</div>
-          <div class="service-card-price">$599/mo</div>
-          <div class="service-tags">
-            <span class="pill">Unlimited updates</span><span class="pill">Same-day support</span><span class="pill">Monthly SEO reports</span>
-          </div>
-        </div>
-      </div>
-    </div>
   </div>
 
   <!-- FOOTER -->
@@ -1882,47 +1615,28 @@ footer {
     <p class="section-body">Every project is a North Shore business we believed in. Here's what happens when design actually serves the brand.</p>
 
     <div class="work-grid">
-      <div class="work-card">
+      <div class="work-card link-card" onclick="window.open('https://makisushibar.net', '_blank', 'noopener,noreferrer')" onkeydown="handleCardKey(event, 'https://makisushibar.net')" tabindex="0" role="link" aria-label="Open Maki Sushi Bar website">
         <div class="work-card-visual brand-maki">
           <div class="work-card-logo">
             <div class="brand-lockup maki-lockup">
-              <svg class="maki-mark" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <circle cx="40" cy="40" r="28" fill="#0b0f14"/>
-                <path d="M61 40C61 51.598 51.598 61 40 61C28.402 61 19 51.598 19 40C19 28.402 28.402 19 40 19C46.556 19 52.411 22.004 56.261 26.708" stroke="#ff332f" stroke-width="9" stroke-linecap="round"/>
-                <path d="M61 40C61 51.598 51.598 61 40 61" stroke="#ff332f" stroke-width="9" stroke-linecap="round"/>
-                <path d="M52 70H92" stroke="#ff332f" stroke-width="7" stroke-linecap="round"/>
-              </svg>
-              <div class="brand-lockup-text">
-                <div class="maki-wordmark">MAKI</div>
-                <div class="maki-submark">Sushi Bar &amp; Grill</div>
-              </div>
+              <img class="portfolio-logo maki-logo" id="maki-logo-img" src="assets/maki.png" alt="Maki Sushi Bar and Grill logo">
             </div>
           </div>
         </div>
         <div class="work-card-info">
           <div class="work-card-category">Restaurant & Booking</div>
           <div class="work-card-title">Maki Sushi Bar</div>
-          <div class="work-card-loc">Peabody, MA · Live website</div>
+          <div class="work-card-loc">Peabody, MA</div>
           <p class="work-card-copy">A polished restaurant site built to showcase the menu, drive direct orders, and make the brand feel premium on mobile and desktop.</p>
-          <a class="work-card-link" href="https://makisushibar.net" target="_blank" rel="noreferrer">Visit makisushibar.net</a>
+          <a class="work-card-link" href="https://makisushibar.net" target="_blank" rel="noreferrer" onclick="event.stopPropagation()">Visit makisushibar.net</a>
         </div>
       </div>
 
-      <div class="work-card">
+      <div class="work-card link-card" onclick="window.open('https://trylastminute.com', '_blank', 'noopener,noreferrer')" onkeydown="handleCardKey(event, 'https://trylastminute.com')" tabindex="0" role="link" aria-label="Open LastMinute website">
         <div class="work-card-visual brand-lastminute">
           <div class="work-card-logo">
             <div class="brand-lockup">
-              <svg class="lm-mark" viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                <path d="M13 43C13 32.507 21.507 24 32 24V24V67C21.507 67 13 58.493 13 48V43Z" fill="#A872F4"/>
-                <path d="M32 24H54V75H32V24Z" fill="#A872F4"/>
-                <path d="M42 14C52.493 14 61 22.507 61 33V56H42V14Z" fill="#F449AE"/>
-                <rect x="54" y="14" width="12" height="38" fill="#439AE8"/>
-                <path d="M67 14H74C84.493 14 93 22.507 93 33V75H74V33C74 22.507 67 14 67 14Z" fill="#FFD153" transform="translate(-9 0)"/>
-              </svg>
-              <div class="brand-lockup-text">
-                <div class="brand-lockup-title">LastMinute</div>
-                <div class="brand-lockup-subtitle">Healthcare staffing platform</div>
-              </div>
+              <img class="portfolio-logo lastminute-logo" src="assets/lastminute.png" alt="LastMinute logo">
             </div>
           </div>
         </div>
@@ -1931,7 +1645,7 @@ footer {
           <div class="work-card-title">LastMinute</div>
           <div class="work-card-loc">Healthcare staffing software</div>
           <p class="work-card-copy">A complex staffing platform focused on schedule clarity, linked-shift workflows, and request management for fast-moving healthcare teams.</p>
-          <a class="work-card-link" href="https://trylastminute.com" target="_blank" rel="noreferrer">Visit trylastminute.com</a>
+          <a class="work-card-link" href="https://trylastminute.com" target="_blank" rel="noreferrer" onclick="event.stopPropagation()">Visit trylastminute.com</a>
         </div>
       </div>
 
@@ -2009,16 +1723,16 @@ footer {
       <div class="about-text">
         <div class="section-label">Our Story</div>
         <h1 class="section-title">Built from<br><em>real life.</em></h1>
-        <p style="color:var(--text2);line-height:1.9;font-size:0.95rem;margin-bottom:20px;">North Shore Designs didn't start in a boardroom. It started at a hospital bedside. Our founder moved to Boston to be close to his brother — who was fighting a chronic illness — and spent months watching the same thing play out: understaffed nurses, systems that couldn't keep up, care that fell through the cracks. He couldn't sit still. He built a web app to help. Then a mobile app. That's just who he is — in every corporate job he ever had, he was the one who figured it out. Installing the tracking snippet nobody else would touch, learning to code when the situation called for it, wiring things together until they worked. Always finding a way.</p>
-        <p style="color:var(--text2);line-height:1.9;font-size:0.95rem;margin-bottom:20px;">When he turned that same energy toward building his own website, something clicked. Every business needs this. Every small business owner is out there doing everything — and most of them have a website that doesn't do them justice. That realization didn't let go.</p>
-        <p style="color:var(--text2);line-height:1.9;font-size:0.95rem;margin-bottom:20px;">He lived in Boston. Then Brookline. And then he found the North Shore — and became one with it. The towns, the water, the people who grind every day and actually give a damn about their community. This is home now. And while he builds for businesses everywhere, the North Shore is where his heart is, and where he wants to be most deeply rooted.</p>
-        <p style="color:var(--text2);line-height:1.9;font-size:0.95rem;"><strong style="color:var(--text);font-weight:600;">He is a small business owner, just like you.</strong> He has always found a way — and he will always find a way for you. Pricing will never be a barrier, because this was never about the money.</p>
+        <p style="color:var(--text2);line-height:1.9;font-size:0.95rem;margin-bottom:20px;">I moved up to New England to help care for my brother while he was dealing with a chronic illness. That period changed a lot for me. It made me pay closer attention to what actually helps people, what creates stress, and what makes life a little easier when someone already has enough on their plate.</p>
+        <p style="color:var(--text2);line-height:1.9;font-size:0.95rem;margin-bottom:20px;">In every job I had, I kept learning by being the person willing to handle the things other people usually avoided. The setup, the fix, the integration, the thing that was annoying but mattered. I never saw that as glamorous. I just realized that if I could do the work other people did not want to do, that would be valuable to someone else.</p>
+        <p style="color:var(--text2);line-height:1.9;font-size:0.95rem;margin-bottom:20px;">That mindset eventually turned into this. I started seeing how many good businesses were doing everything right in real life, but had websites that did not reflect the quality of what they actually offered. I liked the idea of stepping in, cleaning that up, and building something that made people feel proud when they looked at it.</p>
+        <p style="color:var(--text2);line-height:1.9;font-size:0.95rem;"><strong style="color:var(--text);font-weight:600;">I’m a small business owner too.</strong> I know how personal it all is. Your business is not just work. It is something you care about deeply. If I can take one more thing off your plate, make your life easier, and put a smile on your face when the site goes live, then I’m doing what I’m supposed to be doing.</p>
       </div>
     </div>
 
     <!-- Founder quote pull -->
     <div style="margin-top:80px;border-left:3px solid var(--gold);padding:32px 40px;background:var(--surface);border-radius:0 16px 16px 0;max-width:700px;">
-      <p style="font-family:var(--font-display);font-size:1.5rem;font-style:italic;color:var(--text);line-height:1.7;margin-bottom:16px;">"In every job I ever had, I was the one who figured it out — the snippet, the integration, the thing nobody else wanted to touch. I watched my brother not get the care he deserved because systems failed him. I'm not going to let a broken website be the reason your business doesn't get the attention it deserves. I have always found a way. I will always find a way for you."</p>
+      <p style="font-family:var(--font-display);font-size:1.5rem;font-style:italic;color:var(--text);line-height:1.7;margin-bottom:16px;">"In every job I ever had, I was the one people came to when something needed to get figured out. The snippet, the integration, the thing nobody else wanted to touch. So I built this to do the same for you. You stay focused on your business. I’ll handle the part that needs to work."</p>
       <span style="font-family:var(--font-mono);font-size:0.68rem;letter-spacing:0.15em;color:var(--gold);">— Founder, North Shore Designs</span>
     </div>
   </section>
@@ -2103,7 +1817,7 @@ footer {
         <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px;">
           <div style="font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.2em;color:var(--text3);text-transform:uppercase;margin-bottom:12px;">Free brand audit</div>
           <p style="font-size:0.87rem;color:var(--text2);line-height:1.8;margin-bottom:20px;">Every new inquiry gets an honest, no-pressure look at what your online presence needs. No sales pitch — just real feedback.</p>
-          <button class="btn-primary" style="font-size:0.75rem;" onclick="openChat()">Start the conversation →</button>
+          <a class="btn-primary" style="font-size:0.75rem;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;" href="mailto:hello@northshoredesigns.com">Start the conversation →</a>
         </div>
       </div>
     </div>
@@ -2132,38 +1846,6 @@ footer {
       <div class="modal-funfact-label">✦ Industry Insight</div>
       <div class="modal-funfact-text" id="modal-funfact"></div>
     </div>
-  </div>
-</div>
-
-<!-- ==================== CHATBOT ==================== -->
-<button class="chat-bubble" onclick="toggleChat()" id="chat-bubble">
-  💬
-  <span class="chat-dot"></span>
-</button>
-
-<div class="chat-window" id="chat-window">
-  <div class="chat-header">
-    <div class="chat-header-left">
-      <div class="chat-avatar">🌊</div>
-      <div>
-        <div class="chat-header-name">North Shore Designs</div>
-        <div class="chat-header-sub">Typically replies in minutes</div>
-      </div>
-    </div>
-    <button class="chat-header-close" onclick="closeChat()">✕</button>
-  </div>
-  <div class="chat-messages" id="chat-messages">
-    <div class="chat-msg bot">Hey! 👋 I'm the North Shore Designs assistant. Ask me about services, pricing, location, or hours — or just say hi!</div>
-  </div>
-  <div class="chat-quick-btns">
-    <button class="chat-quick-btn" onclick="quickSend('What services do you offer?')">Services</button>
-    <button class="chat-quick-btn" onclick="quickSend('How much does a website cost?')">Pricing</button>
-    <button class="chat-quick-btn" onclick="quickSend('Where are you located?')">Location</button>
-    <button class="chat-quick-btn" onclick="quickSend('What are your hours?')">Hours</button>
-  </div>
-  <div class="chat-input-row">
-    <input class="chat-input" id="chat-input" placeholder="Ask anything..." onkeydown="if(event.key==='Enter')sendChat()">
-    <button class="chat-send" onclick="sendChat()">→</button>
   </div>
 </div>
 
@@ -2330,14 +2012,77 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal()
 
 // ========== PAGE SYSTEM ==========
 function showPage(name) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.getElementById('page-' + name).classList.add('active');
-  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-  const el = document.getElementById('nav-' + name);
-  if (el) el.classList.add('active');
-  window.scrollTo(0, 0);
-  if (name === 'visit') {}
+  window.location.hash = name;
 }
+
+function handleCardKey(event, url) {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    window.open(url, '_blank', 'noopener,noreferrer');
+  }
+}
+
+function processMakiLogo() {
+  const img = document.getElementById('maki-logo-img');
+  if (!img) return;
+
+  const applyTransform = () => {
+    const canvas = document.createElement('canvas');
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    ctx.drawImage(img, 0, 0);
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const data = imageData.data;
+
+    for (let i = 0; i < data.length; i += 4) {
+      const r = data[i];
+      const g = data[i + 1];
+      const b = data[i + 2];
+      const a = data[i + 3];
+      if (a < 20) continue;
+
+      const max = Math.max(r, g, b);
+      const min = Math.min(r, g, b);
+      const isDarkNeutral = max < 80 && max - min < 30;
+
+      if (isDarkNeutral) {
+        data[i] = 255;
+        data[i + 1] = 255;
+        data[i + 2] = 255;
+      }
+    }
+
+    ctx.putImageData(imageData, 0, 0);
+    img.src = canvas.toDataURL('image/png');
+  };
+
+  if (img.complete) applyTransform();
+  else img.addEventListener('load', applyTransform, { once: true });
+}
+
+function renderPage(name, shouldScroll = true) {
+  const validPage = document.getElementById('page-' + name) ? name : 'home';
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + validPage).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const el = document.getElementById('nav-' + validPage);
+  if (el) el.classList.add('active');
+  if (shouldScroll) window.scrollTo(0, 0);
+}
+
+function syncPageFromHash(shouldScroll = false) {
+  const pageName = window.location.hash.replace('#', '') || 'home';
+  renderPage(pageName, shouldScroll);
+}
+
+window.addEventListener('hashchange', () => syncPageFromHash(true));
+window.addEventListener('DOMContentLoaded', () => {
+  syncPageFromHash(false);
+  processMakiLogo();
+});
 
 // ========== TABS ==========
 function switchTab(id, btn) {
@@ -2366,30 +2111,6 @@ function closeMobile() {
   document.getElementById('mobile-menu').classList.remove('open');
   document.getElementById('hamburger').classList.remove('open');
 }
-
-
-// ========== CHATBOT ==========
-let chatOpen = false;
-
-function openChat() { document.getElementById('chat-window').classList.add('open'); chatOpen = true; }
-function closeChat() { document.getElementById('chat-window').classList.remove('open'); chatOpen = false; }
-function toggleChat() { chatOpen ? closeChat() : openChat(); }
-
-const chatRules = [
-  { k: ['hour','open','close','when','time','available'], r: 'We\'re reachable whenever you are — no business hours here. Send us an email at hello@northshoredesigns.com any time, day or night. During the day we typically reply within a couple hours, late-night messages get a response by morning. 🌊' },
-  { k: ['address','location','where','find','direction','park','transit','commute'], r: 'We\'re based in Peabody, MA 01960. Email us at hello@northshoredesigns.com and we\'ll send you directions! 📍' },
-  { k: ['phone','call','number','reach','contact','email'], r: 'Best way to reach us is email — hello@northshoredesigns.com. We typically respond within a few hours on business days! 📬' },
-  { k: ['price','cost','much','afford','budget','quote','rate','package','starter','signature','ecommerce','care'], r: 'Pricing is simple and reasonable: $1,000 to transfer an old website, $1,000 for a new website, and $20/month for hosting. Future changes can be handled per request, or we can work out a monthly cost depending on what you need and how much time it takes.' },
-  { k: ['service','offer','do','build','design','brand','seo','logo','content','rebranding'], r: 'We do web design, full brand identity, local SEO, content writing, analytics setup, and ongoing website care plans. Basically everything to make your business look and rank better online. Check out our Services page for details!' },
-  { k: ['north shore','local','salem','gloucester','marblehead','beverly','swampscott','ipswich','newburyport','rockport','manchester','essex'], r: 'North Shore born and raised! Our team lives across Salem, Beverly, and Newburyport. We know the towns, the businesses, and the communities we serve — that\'s what makes us different from a faceless Boston agency. 🌊' },
-  { k: ['how long','timeline','turnaround','week','fast'], r: 'Timeline depends on the project, but simple website transfers and new website builds are kept practical and efficient. Send over what you have, what you need changed, and your ideal launch date, and we will give you a realistic estimate.' },
-  { k: ['award','best','win','recognition','voted'], r: 'We were voted #1 Web Studio on the North Shore by local business owners — the kind of recognition that actually means something to us. When the people we serve vouch for you, that\'s the real award. ✦' },
-  { k: ['free','audit','consult','start','begin','first'], r: 'Every new inquiry gets a free brand audit and 20-minute strategy call. No sales pressure, just honest feedback on what your site needs. You can start by emailing us or clicking "Let\'s Talk" in the nav! 🎯' },
-  { k: ['team','people','who','staff','founder','owner','person'], r: 'North Shore Designs is founder-run — one person who moved to the North Shore, built apps and websites, and decided to put those skills to work for local small businesses. No big agency overhead, no junior staff handing off your project. Just someone who genuinely cares. 🤝' },
-  { k: ['hi','hello','hey','howdy','sup','yo'], r: 'Hey there! 👋 Welcome to North Shore Designs. We build websites for North Shore businesses that actually work. What can I help you with today? Ask me about services, pricing, our team, or anything else!' },
-  { k: ['thanks','thank','great','awesome','perfect','love'], r: 'So glad I could help! 😊 If you\'re ready to talk about your project, hit "Let\'s Talk" in the nav or email us at hello@northshoredesigns.com. We\'d love to work with you.' }
-];
-
 function revealEmail() {
   const el = document.getElementById('email-reveal');
   const hint = document.getElementById('email-hint');
@@ -2401,37 +2122,6 @@ function revealEmail() {
   card.style.cursor = 'default';
   card.onclick = null;
   document.querySelector('#email-card .contact-card-label').textContent = 'Email';
-}
-
-function getReply(msg) {
-  const lower = msg.toLowerCase();
-  for (const rule of chatRules) {
-    if (rule.k.some(k => lower.includes(k))) return rule.r;
-  }
-  return "Great question! That's a bit too specific for me to answer automatically. Shoot us an email at hello@northshoredesigns.com and someone from our team will get back to you right away! 🌊";
-}
-
-function addMsg(text, who) {
-  const msgs = document.getElementById('chat-messages');
-  const div = document.createElement('div');
-  div.className = 'chat-msg ' + who;
-  div.textContent = text;
-  msgs.appendChild(div);
-  msgs.scrollTop = msgs.scrollHeight;
-}
-
-function sendChat() {
-  const input = document.getElementById('chat-input');
-  const msg = input.value.trim();
-  if (!msg) return;
-  addMsg(msg, 'user');
-  input.value = '';
-  setTimeout(() => addMsg(getReply(msg), 'bot'), 600);
-}
-
-function quickSend(text) {
-  addMsg(text, 'user');
-  setTimeout(() => addMsg(getReply(text), 'bot'), 600);
 }
 </script>
 </body>
