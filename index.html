@@ -625,8 +625,139 @@ section {
   overflow: hidden;
 }
 
+.work-card-logo {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  position: relative;
+}
+
+.work-card-logo::after {
+  content: "";
+  position: absolute;
+  inset: auto 28px 22px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+}
+
+.brand-lockup {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.brand-lockup-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.brand-lockup-title {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  line-height: 0.95;
+  color: #fff;
+}
+
+.brand-lockup-subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.brand-maki {
+  background:
+    radial-gradient(circle at 24% 26%, rgba(255,255,255,0.08), transparent 32%),
+    linear-gradient(180deg, rgba(38,16,18,0.92), rgba(12,10,12,0.98));
+}
+
+.brand-lastminute {
+  background:
+    radial-gradient(circle at 78% 24%, rgba(123,196,255,0.12), transparent 34%),
+    linear-gradient(180deg, rgba(10,25,44,0.96), rgba(11,13,20,0.98));
+}
+
+.brand-maki .brand-lockup-title {
+  letter-spacing: 0.01em;
+  font-size: 2.35rem;
+}
+
+.brand-maki .brand-lockup-subtitle {
+  color: rgba(255,255,255,0.72);
+}
+
+.brand-lastminute .brand-lockup-subtitle {
+  color: rgba(120,198,255,0.9);
+}
+
+.maki-mark,
+.lm-mark {
+  width: 78px;
+  height: 78px;
+  flex-shrink: 0;
+}
+
+.maki-lockup {
+  gap: 14px;
+}
+
+.maki-lockup .brand-lockup-text {
+  gap: 0;
+}
+
+.maki-wordmark {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 2.7rem;
+  line-height: 0.9;
+  letter-spacing: 0.01em;
+  color: #f7f7f7;
+}
+
+.maki-submark {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+}
+
 .work-card-info {
   padding: 24px;
+}
+
+.work-card-copy {
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: var(--text2);
+  margin-top: 14px;
+}
+
+.work-card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+  border: 1px solid var(--border2);
+  padding: 10px 16px;
+  border-radius: 999px;
+  transition: all 0.2s ease;
+}
+
+.work-card-link:hover {
+  border-color: var(--accent);
+  background: var(--glow2);
 }
 
 .work-card-category {
@@ -894,6 +1025,50 @@ section {
   font-size: 0.85rem;
   color: var(--text2);
   line-height: 1.7;
+}
+
+.modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.modal-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 999px;
+  padding: 12px 18px;
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: all 0.2s ease;
+}
+
+.modal-link-btn.primary {
+  background: var(--accent);
+  color: #fff;
+  border: 1px solid transparent;
+  box-shadow: 0 10px 30px var(--glow);
+}
+
+.modal-link-btn.primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 34px var(--glow);
+}
+
+.modal-link-btn.secondary {
+  color: var(--text2);
+  border: 1px solid var(--border2);
+  background: var(--bg3);
+}
+
+.modal-link-btn.secondary:hover {
+  border-color: var(--accent);
+  color: var(--text);
 }
 
 /* ========== CHATBOT ========== */
@@ -1243,7 +1418,7 @@ footer {
 <body>
 
 <!-- ANNOUNCEMENT BANNER -->
-<div id="banner">✦ Voted #1 Web Studio on the North Shore by Local Business Owners &nbsp;·&nbsp; Now Booking Q3 Projects &nbsp;·&nbsp; Free Brand Audit for New Clients ✦</div>
+<div id="banner">✦ Voted #1 Web Studio on the North Shore by Local Business Owners &nbsp;·&nbsp; <a href="mailto:hello@northshoredesigns.com">Get in touch</a> &nbsp;·&nbsp; Free Brand Audit for New Clients ✦</div>
 
 <!-- NAV -->
 <nav>
@@ -1707,115 +1882,74 @@ footer {
     <p class="section-body">Every project is a North Shore business we believed in. Here's what happens when design actually serves the brand.</p>
 
     <div class="work-grid">
-      <div class="work-card" onclick="openModal('w-harbor')">
-        <div class="work-card-visual wc-1">
-          <svg width="100%" height="100%" viewBox="0 0 400 220" fill="none">
-            <rect width="400" height="220" fill="none"/>
-            <path d="M0 160 Q100 120 200 150 Q300 180 400 140 L400 220 L0 220 Z" fill="rgba(78,184,240,0.15)"/>
-            <path d="M0 180 Q100 150 200 165 Q300 180 400 155 L400 220 L0 220 Z" fill="rgba(78,184,240,0.1)"/>
-            <rect x="160" y="60" width="80" height="90" rx="4" fill="rgba(78,184,240,0.2)" stroke="rgba(78,184,240,0.5)" stroke-width="1"/>
-            <rect x="170" y="70" width="60" height="8" rx="2" fill="rgba(78,184,240,0.6)"/>
-            <rect x="170" y="86" width="40" height="4" rx="2" fill="rgba(255,255,255,0.2)"/>
-            <rect x="170" y="96" width="50" height="4" rx="2" fill="rgba(255,255,255,0.15)"/>
-            <rect x="170" y="110" width="60" height="20" rx="10" fill="rgba(78,184,240,0.5)"/>
-            <text x="200" y="124" text-anchor="middle" font-size="8" fill="white" font-family="monospace">BOOK NOW</text>
-          </svg>
+      <div class="work-card">
+        <div class="work-card-visual brand-maki">
+          <div class="work-card-logo">
+            <div class="brand-lockup maki-lockup">
+              <svg class="maki-mark" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <circle cx="40" cy="40" r="28" fill="#0b0f14"/>
+                <path d="M61 40C61 51.598 51.598 61 40 61C28.402 61 19 51.598 19 40C19 28.402 28.402 19 40 19C46.556 19 52.411 22.004 56.261 26.708" stroke="#ff332f" stroke-width="9" stroke-linecap="round"/>
+                <path d="M61 40C61 51.598 51.598 61 40 61" stroke="#ff332f" stroke-width="9" stroke-linecap="round"/>
+                <path d="M52 70H92" stroke="#ff332f" stroke-width="7" stroke-linecap="round"/>
+              </svg>
+              <div class="brand-lockup-text">
+                <div class="maki-wordmark">MAKI</div>
+                <div class="maki-submark">Sushi Bar &amp; Grill</div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="work-card-info">
           <div class="work-card-category">Restaurant & Booking</div>
-          <div class="work-card-title">Breakwater Kitchen</div>
-          <div class="work-card-loc">Coastal North Shore · 2024</div>
+          <div class="work-card-title">Maki Sushi Bar</div>
+          <div class="work-card-loc">Peabody, MA · Live website</div>
+          <p class="work-card-copy">A polished restaurant site built to showcase the menu, drive direct orders, and make the brand feel premium on mobile and desktop.</p>
+          <a class="work-card-link" href="https://makisushibar.net" target="_blank" rel="noreferrer">Visit makisushibar.net</a>
         </div>
       </div>
 
-      <div class="work-card" onclick="openModal('w-tide')">
-        <div class="work-card-visual wc-4">
-          <svg width="100%" height="100%" viewBox="0 0 400 220" fill="none">
-            <circle cx="200" cy="90" r="60" fill="rgba(40,200,64,0.08)" stroke="rgba(40,200,64,0.2)" stroke-width="1"/>
-            <circle cx="200" cy="90" r="40" fill="rgba(40,200,64,0.12)" stroke="rgba(40,200,64,0.3)" stroke-width="1"/>
-            <text x="200" y="96" text-anchor="middle" font-size="30" fill="rgba(40,200,64,0.6)">💪</text>
-            <rect x="100" y="165" width="200" height="4" rx="2" fill="rgba(40,200,64,0.3)"/>
-            <rect x="140" y="177" width="120" height="4" rx="2" fill="rgba(40,200,64,0.2)"/>
-          </svg>
+      <div class="work-card">
+        <div class="work-card-visual brand-lastminute">
+          <div class="work-card-logo">
+            <div class="brand-lockup">
+              <svg class="lm-mark" viewBox="0 0 88 88" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M13 43C13 32.507 21.507 24 32 24V24V67C21.507 67 13 58.493 13 48V43Z" fill="#A872F4"/>
+                <path d="M32 24H54V75H32V24Z" fill="#A872F4"/>
+                <path d="M42 14C52.493 14 61 22.507 61 33V56H42V14Z" fill="#F449AE"/>
+                <rect x="54" y="14" width="12" height="38" fill="#439AE8"/>
+                <path d="M67 14H74C84.493 14 93 22.507 93 33V75H74V33C74 22.507 67 14 67 14Z" fill="#FFD153" transform="translate(-9 0)"/>
+              </svg>
+              <div class="brand-lockup-text">
+                <div class="brand-lockup-title">LastMinute</div>
+                <div class="brand-lockup-subtitle">Healthcare staffing platform</div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="work-card-info">
-          <div class="work-card-category">Fitness & Wellness</div>
-          <div class="work-card-title">Ironclad Training Co.</div>
-          <div class="work-card-loc">North Shore · 2024</div>
+          <div class="work-card-category">Scheduling Platform</div>
+          <div class="work-card-title">LastMinute</div>
+          <div class="work-card-loc">Healthcare staffing software</div>
+          <p class="work-card-copy">A complex staffing platform focused on schedule clarity, linked-shift workflows, and request management for fast-moving healthcare teams.</p>
+          <a class="work-card-link" href="https://trylastminute.com" target="_blank" rel="noreferrer">Visit trylastminute.com</a>
         </div>
       </div>
 
-      <div class="work-card" onclick="openModal('w-saltwick')">
+      <div class="work-card">
         <div class="work-card-visual wc-2">
           <svg width="100%" height="100%" viewBox="0 0 400 220" fill="none">
-            <path d="M200 40 L200 100" stroke="rgba(200,169,110,0.6)" stroke-width="2"/>
-            <ellipse cx="200" cy="40" rx="6" ry="10" fill="rgba(200,169,110,0.8)"/>
-            <path d="M200 40 Q210 20 200 10 Q190 20 200 40" fill="rgba(255,160,0,0.7)"/>
-            <path d="M200 40 Q214 16 206 6 Q194 14 200 40" fill="rgba(255,120,0,0.5)"/>
-            <rect x="180" y="100" width="40" height="60" rx="4" fill="rgba(200,169,110,0.3)" stroke="rgba(200,169,110,0.4)" stroke-width="1"/>
-            <text x="200" y="136" text-anchor="middle" font-size="8" fill="rgba(200,169,110,0.9)" font-family="serif">SALT &amp; WICK</text>
-            <path d="M100 180 Q140 160 180 175 Q220 190 260 170 Q300 150 340 165" stroke="rgba(200,169,110,0.2)" stroke-width="1" fill="none"/>
+            <circle cx="200" cy="84" r="42" fill="rgba(200,169,110,0.08)" stroke="rgba(200,169,110,0.2)" stroke-width="1"/>
+            <text x="200" y="92" text-anchor="middle" font-size="30" fill="rgba(200,169,110,0.7)">✦</text>
+            <path d="M100 175 Q150 150 200 168 Q250 186 300 160" stroke="rgba(200,169,110,0.2)" stroke-width="1.5" fill="none"/>
+            <rect x="128" y="118" width="144" height="42" rx="21" fill="rgba(200,169,110,0.12)" stroke="rgba(200,169,110,0.22)" stroke-width="1"/>
+            <text x="200" y="144" text-anchor="middle" font-size="12" fill="rgba(200,169,110,0.95)" font-family="monospace">WE'RE JUST GETTING STARTED</text>
           </svg>
         </div>
         <div class="work-card-info">
-          <div class="work-card-category">Retail & eCommerce</div>
-          <div class="work-card-title">Driftwood & Co.</div>
-          <div class="work-card-loc">North Shore · 2023</div>
-        </div>
-      </div>
-
-      <div class="work-card" onclick="openModal('w-cape')">
-        <div class="work-card-visual wc-6">
-          <svg width="100%" height="100%" viewBox="0 0 400 220" fill="none">
-            <rect x="80" y="60" width="240" height="140" rx="8" fill="rgba(30,60,180,0.15)" stroke="rgba(78,184,240,0.2)" stroke-width="1"/>
-            <rect x="80" y="60" width="240" height="28" rx="8" fill="rgba(30,60,180,0.2)"/>
-            <rect x="80" y="80" width="240" height="8" fill="rgba(30,60,180,0.2)"/>
-            <circle cx="100" cy="74" r="5" fill="rgba(255,95,87,0.7)"/>
-            <circle cx="116" cy="74" r="5" fill="rgba(254,188,46,0.7)"/>
-            <circle cx="132" cy="74" r="5" fill="rgba(40,200,64,0.7)"/>
-            <rect x="96" y="100" width="100" height="6" rx="3" fill="rgba(78,184,240,0.5)"/>
-            <rect x="96" y="114" width="140" height="4" rx="2" fill="rgba(255,255,255,0.12)"/>
-            <rect x="96" y="124" width="120" height="4" rx="2" fill="rgba(255,255,255,0.09)"/>
-            <rect x="96" y="140" width="80" height="22" rx="11" fill="rgba(78,184,240,0.4)"/>
-          </svg>
-        </div>
-        <div class="work-card-info">
-          <div class="work-card-category">Law & Professional</div>
-          <div class="work-card-title">Harmon & Voss Legal</div>
-          <div class="work-card-loc">North Shore · 2024</div>
-        </div>
-      </div>
-
-      <div class="work-card" onclick="openModal('w-rockport')">
-        <div class="work-card-visual wc-5">
-          <svg width="100%" height="100%" viewBox="0 0 400 220" fill="none">
-            <path d="M50 180 Q100 140 150 160 Q200 180 250 150 Q300 120 350 145 L350 220 L50 220 Z" fill="rgba(200,60,60,0.15)"/>
-            <rect x="150" y="80" width="100" height="70" rx="6" fill="rgba(200,60,60,0.2)" stroke="rgba(200,60,60,0.4)" stroke-width="1"/>
-            <text x="200" y="122" text-anchor="middle" font-size="24" fill="rgba(200,60,60,0.8)">🏠</text>
-            <rect x="120" y="168" width="160" height="3" rx="2" fill="rgba(200,60,60,0.25)"/>
-          </svg>
-        </div>
-        <div class="work-card-info">
-          <div class="work-card-category">Real Estate</div>
-          <div class="work-card-title">Ledge & Shore Realty</div>
-          <div class="work-card-loc">North Shore · 2023</div>
-        </div>
-      </div>
-
-      <div class="work-card" onclick="openModal('w-ipswich')">
-        <div class="work-card-visual wc-3">
-          <svg width="100%" height="100%" viewBox="0 0 400 220" fill="none">
-            <circle cx="120" cy="100" r="35" fill="rgba(180,50,220,0.1)" stroke="rgba(180,50,220,0.25)" stroke-width="1"/>
-            <circle cx="200" cy="80" r="50" fill="rgba(180,50,220,0.12)" stroke="rgba(180,50,220,0.3)" stroke-width="1"/>
-            <circle cx="290" cy="110" r="30" fill="rgba(180,50,220,0.08)" stroke="rgba(180,50,220,0.2)" stroke-width="1"/>
-            <text x="200" y="88" text-anchor="middle" font-size="26" fill="rgba(180,50,220,0.7)">💆</text>
-            <rect x="140" y="155" width="120" height="4" rx="2" fill="rgba(180,50,220,0.3)"/>
-          </svg>
-        </div>
-        <div class="work-card-info">
-          <div class="work-card-category">Spa & Wellness</div>
-          <div class="work-card-title">Saltmarsh Wellness</div>
-          <div class="work-card-loc">North Shore · 2024</div>
+          <div class="work-card-category">Next Up</div>
+          <div class="work-card-title">We&apos;re just getting started.</div>
+          <div class="work-card-loc">More North Shore launches coming soon</div>
+          <p class="work-card-copy">The next case study here should be yours. We’re actively building for local businesses that want sharper websites, stronger branding, and a cleaner digital presence.</p>
         </div>
       </div>
     </div>
