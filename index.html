@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>North Shore Designs — North Shore Web Design</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&family=Space+Grotesk:wght@600&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -690,6 +690,48 @@ section {
 
 .lastminute-logo {
   width: min(188px, 58%);
+}
+
+.brand-gsweetss {
+  background:
+    radial-gradient(circle at 76% 22%, rgba(239,62,79,0.18), transparent 36%),
+    radial-gradient(circle at 18% 84%, rgba(143,205,242,0.12), transparent 40%),
+    linear-gradient(180deg, rgba(14,31,59,0.96), rgba(8,20,42,0.98));
+}
+
+.brand-esther {
+  background:
+    radial-gradient(circle at 26% 24%, rgba(229,231,235,0.08), transparent 34%),
+    linear-gradient(180deg, rgba(31,41,55,0.96), rgba(17,24,39,0.98));
+}
+
+.gsweetss-logo {
+  width: min(250px, 64%);
+}
+
+.esther-lockup {
+  justify-content: center;
+  gap: 16px;
+}
+
+.esther-mark {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  color: #111827;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.esther-wordmark {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 2.6rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #f3f4f6;
+  line-height: 1;
 }
 
 .work-card-info {
@@ -1616,6 +1658,23 @@ footer {
         </div>
       </div>
 
+      <div class="work-card link-card" onclick="window.open('https://gsweetss.com', '_blank', 'noopener,noreferrer')" onkeydown="handleCardKey(event, 'https://gsweetss.com')" tabindex="0" role="link" aria-label="Open G Sweetss website">
+        <div class="work-card-visual brand-gsweetss">
+          <div class="work-card-logo">
+            <div class="brand-lockup">
+              <img class="portfolio-logo gsweetss-logo" src="assets/gsweetss.png" alt="G Sweetss logo">
+            </div>
+          </div>
+        </div>
+        <div class="work-card-info">
+          <div class="work-card-category">Bakery & Café</div>
+          <div class="work-card-title">G Sweetss</div>
+          <div class="work-card-loc">Peabody, MA</div>
+          <p class="work-card-copy">A warm, photo-forward site for a Greek &amp; Mediterranean bakery: a tap-for-a-fun-fact menu, a custom cake gallery, and the shop&apos;s red and baby-blue brand front and center.</p>
+          <a class="work-card-link" href="https://gsweetss.com" target="_blank" rel="noreferrer" onclick="event.stopPropagation()">Visit gsweetss.com</a>
+        </div>
+      </div>
+
       <div class="work-card link-card" onclick="window.open('https://trylastminute.com', '_blank', 'noopener,noreferrer')" onkeydown="handleCardKey(event, 'https://trylastminute.com')" tabindex="0" role="link" aria-label="Open LastMinute website">
         <div class="work-card-visual brand-lastminute">
           <div class="work-card-logo">
@@ -1630,6 +1689,24 @@ footer {
           <div class="work-card-loc">Healthcare staffing software</div>
           <p class="work-card-copy">A complex staffing platform focused on schedule clarity, linked-shift workflows, and request management for fast-moving healthcare teams.</p>
           <a class="work-card-link" href="https://trylastminute.com" target="_blank" rel="noreferrer" onclick="event.stopPropagation()">Visit trylastminute.com</a>
+        </div>
+      </div>
+
+      <div class="work-card link-card" onclick="window.open('https://tryesther.com', '_blank', 'noopener,noreferrer')" onkeydown="handleCardKey(event, 'https://tryesther.com')" tabindex="0" role="link" aria-label="Open Esther website">
+        <div class="work-card-visual brand-esther">
+          <div class="work-card-logo">
+            <div class="brand-lockup esther-lockup">
+              <span class="esther-mark" aria-hidden="true"><svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor"><path d="M8 3.5h14l-2.4 4.5H5.6z" stroke-linejoin="round" stroke="currentColor" stroke-width="1"/><path d="M6 9.75h13.5l-2.4 4.5H3.6z" stroke-linejoin="round" stroke="currentColor" stroke-width="1"/><path d="M4 16h12.5l-2.4 4.5H1.6z" stroke-linejoin="round" stroke="currentColor" stroke-width="1"/></svg></span>
+              <span class="esther-wordmark">Esther</span>
+            </div>
+          </div>
+        </div>
+        <div class="work-card-info">
+          <div class="work-card-category">AI Receptionist</div>
+          <div class="work-card-title">Esther</div>
+          <div class="work-card-loc">Software for service businesses</div>
+          <p class="work-card-copy">A sharp product site for an AI receptionist that answers, qualifies, and follows up on every call, so small service businesses never lose a lead.</p>
+          <a class="work-card-link" href="https://tryesther.com" target="_blank" rel="noreferrer" onclick="event.stopPropagation()">Visit tryesther.com</a>
         </div>
       </div>
 
